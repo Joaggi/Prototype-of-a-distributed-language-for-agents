@@ -4,7 +4,7 @@ Created on Wed Nov 20 11:51:42 2013
 
 @author: Munkys
 """
-import Pyro4
+import Pyro4#test new contributor
 
 # we're using custom classes, so need to use pickle
 Pyro4.config.SERIALIZER='pickle'
