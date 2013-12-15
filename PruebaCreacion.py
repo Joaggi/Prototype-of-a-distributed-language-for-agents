@@ -16,8 +16,8 @@ from ComunidadAgentes import ComunidadAgentes
 ns = Pyro4.locateNS()
 print (ns.list(prefix="agentes.distribuidos.comunidad.").items())
 
-comunidadAgentes = Pyro4.core.Proxy("PYRONAME:agentes.distribuidos.comunidad.ingenieros")
-comunidadAgentes.addAgente(Agente("Joseph"),"Joseph")
+comunidadAgentes = Pyro4.core.Proxy("PYRONAME:agentes.distribuidos.comunidad.estudiantes")
+comunidadAgentes.addAgente(Agente("Josephg"),"Josephg")
 
 comunidadAgentes = Pyro4.core.Proxy("PYRONAME:agentes.distribuidos.comunidad.ingenieros")
 comunidadAgentes.setServicio(Servicio("Skype"))

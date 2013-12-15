@@ -32,11 +32,19 @@ class Host(object):
         
     def addNS(self,ns):
         """    """
-        self.listNS[ns.getNombre()] = ns
+        try:
+            if self.listNS[ns.getNombre()]:
+                print "El NS existe en la lista"
+        except KeyError:
+            self.listNS[ns.getNombre()] = ns
         
     def deleteNS(self,nombre):
         """    """
-        del self.listNS[nombre]
+        try:
+            del self.listNS[nombre]
+            print "Se elimino el NS de la lista"
+        except KeyError:
+            print "No existe el NS en la lista"
         
     def getListAgentes(self):  
         """  """
@@ -44,11 +52,21 @@ class Host(object):
     
     def addAgente(self,agente):
         """ """
-        self.listAgentes[agente.getNombre()] = agente
+        try:
+            if self.listAgentes[agente.getNombre()]:
+                print "El Agente existe en la lista"
+        except KeyError:
+            self.listAgentes[agente.getNombre()] = agente
+
         
     def deleteAgente(self,nombre):
         """ """
-        del self.listAgente[nombre]
+        try:
+            del self.listAgente[nombre]
+            print "Se elimino el Agente de la lista"
+        except KeyError:
+            print "No existe el Agente en la lista"
+        
             
     def getListMovilidad(self,):
         """ """
@@ -56,11 +74,21 @@ class Host(object):
         
     def addMovilidad(self,movilidad):
         """ """
-        self.listMovilidad[movilidad.getNombre()] = movilidad
+        try:
+            if self.listMovilidad[movilidad.getNombre()]:
+                print "La movilidad existe en la lista"
+        except KeyError:
+            self.listMovilidad[movilidad.getNombre()] = movilidad
+        
 
     def deleteMovilidad(self,nombre):
         """ """
-        del self.listMovilidad[nombre]
+        try:
+            del self.listMovilidad[nombre]
+            print "Se elimino la movilidad de la lista"
+        except KeyError:
+            print "No existe la movilidad en la lista"
+        
             
     def getListRacionalidad(self,):
         """ """
@@ -68,10 +96,20 @@ class Host(object):
         
     def addRacionalidad(self,racionalidad):
         """ """
-        self.listRacionalidad[racionalidad.getNombre()] = racionalidad
+        try:
+            if self.listRacionalidad[racionalidad.getNombre()]:
+                print "La racionalidad existe en la lista"
+        except KeyError:
+            self.listRacionalidad[racionalidad.getNombre()] = racionalidad
+        
             
     def deleteRacionalidad(self,nombre):
         """ """
-        del self.listRacionalidad[nombre]
+        try:
+            del self.listRacionalidad[nombre]
+            print "Se elimino la racionalidad de la lista"
+        except KeyError:
+            print "No existe la racionalidad en la lista"
+        
     
     
