@@ -17,12 +17,16 @@ class Host(object):
     """Esta clase se encargara de todas las funciones de 
     definicion del ..."""
     
-    def __init__(self ):   
+    def __init__(self , nombre):   
+        self.nombre = nombre
         self.listNS = {}
         self.listAgentes = {}
         self.listMovilidad = {}
         self.listRacionalidad = {}
-        
+    
+    def getNombre(self):
+        """ """
+        return self.nombre
     
     def getListNS(self):
         """ Se obtiene la lista de los naming space que define pyro
