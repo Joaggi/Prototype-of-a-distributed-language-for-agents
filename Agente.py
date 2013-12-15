@@ -2,7 +2,7 @@
 """
 Created on Wed Nov 20 11:49:14 2013
 
-@author: Alejandro Gallego
+@author: Alejandro Gallego Hola mundo
 """
 import Pyro4
 from Movilidad import Movilidad
