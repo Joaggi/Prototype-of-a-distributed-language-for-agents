@@ -1,14 +1,14 @@
-#encoding: utf-8
-import re, sys, lexer, grammar
+import grammar as g
+import re
 
-p = re.compile(grammar.getIdentificador(),re.UNICODE)
-
-f = open(sys.argv[1], 'r')
-lines=list(f)
-i=1
-for line in lines:
-	m=re.match(p,line)
-	if m==None:
-		print('Error de sintaxis en la linea %s: %s'%(i,line))
-	i+=1
-f.close()
+def analizarSintaxis(all_tokens):
+	p=re.compile(g.getDeclaraciones())
+	i=1
+	for token_list in all_tokens:
+		if p.match(" ".join(token_list))==None:
+			print "Error de sintaxis en la linea %d" %(i)
+			return False
+		else:
+			print "Evaluar ejecucion del comando"
+		i+=1
+		

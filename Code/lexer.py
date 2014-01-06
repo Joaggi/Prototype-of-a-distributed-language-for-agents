@@ -5,15 +5,17 @@ def analizarEntrada(nombreArchivo):
 	f = open(nombreArchivo, 'r')
 	lines=list(f)
 	all_tokens=[]
+	i=1
 	for line in lines:
 		tokens=[]
 		for token in line.rstrip().split(' '):
 			if analizarToken(token)==False:
-				print "El token %s no es valido" %(token)
+				print 'Error en la linea %d: El token "%s" es invalido' %(i,token)
 				return None
 			else:
 				tokens.append(token)
 		all_tokens.append(tokens)
+		i+=1
 	f.close()
 	return all_tokens
 	
