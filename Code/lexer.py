@@ -1,0 +1,22 @@
+import grammar as g
+import re
+
+def analizarEntrada(nombreArchivo):
+	f = open(nombreArchivo, 'r')
+	lines=list(f)
+	all_tokens=[]
+	for line in lines:
+		tokens=[]
+		for token in line.rstrip().split(' '):
+			if analizarToken(token)==False:
+				print "El token %s no es valido" %(token)
+				return None
+			else:
+				tokens.append(token)
+		all_tokens.append(tokens)
+	f.close()
+	return all_tokens
+	
+def analizarToken(token):
+	p=re.compile("("+g.getIdentificador()+'\Z|"'+g.getIdentificador()+'"\Z)')
+	return p.match(token) is not None
