@@ -15,5 +15,5 @@ Ingenieros = ComunidadAgentes("estudiantes")
 #Se crea de la manera simple con serveSimple, sin tener en cuenta el host.
 Pyro4.Daemon.serveSimple({
     Ingenieros : "agentes.distribuidos.comunidad." + str(Ingenieros.getNombre())
-},host="192.168.1.14")
+},host="0.0.0.0")
 

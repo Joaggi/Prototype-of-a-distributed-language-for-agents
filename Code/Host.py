@@ -34,13 +34,16 @@ class Host(object):
         que se encuentran esparcidos en la red ad-hoc"""
         return self.listNS;
         
-    def addNS(self,ns):
+    def addNS(self,host,ns):
         """    """
         try:
-            if self.listNS[ns.getNombre()]:
+            if self.listNS[host]:
                 print "El NS existe en la lista"
         except KeyError:
-            self.listNS[ns.getNombre()] = ns
+            self.listNS[host] = "PYRO:Pyro.NameServer@" + str(host)  +":"+ str(ns.port)
+            
+    def setListNS(self, lNS):
+        self.listNS = lNS
         
     def deleteNS(self,nombre):
         """    """
@@ -61,7 +64,9 @@ class Host(object):
                 print "El Agente existe en la lista"
         except KeyError:
             self.listAgentes[agente.getNombre()] = agente
-
+    
+    def setListAgente(self, lAgente):
+        self.listAgente = lAgente
         
     def deleteAgente(self,nombre):
         """ """
@@ -83,8 +88,10 @@ class Host(object):
                 print "La movilidad existe en la lista"
         except KeyError:
             self.listMovilidad[movilidad.getNombre()] = movilidad
-        
 
+    def setListMovilidad(self, lMovilidad):
+        self.listMovilidad = lMovilidad
+        
     def deleteMovilidad(self,nombre):
         """ """
         try:
@@ -106,6 +113,8 @@ class Host(object):
         except KeyError:
             self.listRacionalidad[racionalidad.getNombre()] = racionalidad
         
+    def setListRacionalidad(self, lRacionalidad):
+        self.listRacionalidad = lRacionalidad
             
     def deleteRacionalidad(self,nombre):
         """ """

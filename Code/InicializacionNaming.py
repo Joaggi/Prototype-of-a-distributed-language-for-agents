@@ -5,17 +5,110 @@ Created on Mon Dec 09 22:54:23 2013
 @author: Alejandro
 """
 import Pyro4
-from Agente import Agente
-from Servicio import Servicio
-from ComunidadAgentes import ComunidadAgentes
+import select
 from Host import Host
 
+
+Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
+
 #Prueba
+nombre = "Logik"
+
+#Al activarse la bandera no se seguira tratando de obtener el host en vez de esto se creara.
+banderaNS = True
+banderaHost = True
+
+try:
+    ns = Pyro4.locateNS()
+except: 
+    print("No existe un servidor de NS.")
+    banderaNS = False
+    banderaHost = False
 
 
-ns = Pyro4.locateNS()
-host = Pyro4.core.Proxy("PYRONAME:agentes.distribuidos.host")
+if(banderaNS):
+    try:
+        hostNS = Pyro4.core.Proxy("PYRONAME:" + ns.list().keys()[1])
+    except:
+        print("No existe un host en este servidor de NS.")
+        banderaHost = False
 
-if len(host.getListNS()) != 0:    
-    for naming in host.getListNS():
-        print naming
+#Se obtiene la ip de la red.
+mi_ip = Pyro4.socketutil.getIpAddress(None, workaround127=True)
+
+print("Se procedera a crear un host")
+hostDemonio = Host(nombre)
+
+
+if(banderaHost):
+    print("Se obtendra una lista de los ns")
+    hostDemonio.setListNS(hostNS.getListNS())
+
+
+
+
+print("Inicializando servicios... tipo de servidor=%s" % Pyro4.config.SERVERTYPE)
+# start a name server with broadcast server as well
+nameserverUri, nameserverDaemon, broadcastServer = Pyro4.naming.startNS(host="0.0.0.0")
+assert broadcastServer is not None, "excepcion no se ha podido crear el servidor de broadcast"
+
+print("Obteniendo el nombre del servidor o nameserver (ns), uri=%s" % nameserverUri)
+print("Localizacion del demonio ns string=%s" % nameserverDaemon.locationStr)
+print("Demonio de socket ns=%s" % nameserverDaemon.sockets)
+print("Demonio de socket bc=%s (fileno %d)" % (broadcastServer.sock, broadcastServer.fileno()))
+        
+        
+hostDemonio.addNS(mi_ip, nameserverUri)
+#Metodo pyro
+#Crear un demonio en pyro
+pyrodaemon=Pyro4.core.Daemon(host=mi_ip)
+print("Localizacion del demonio str=%s" % pyrodaemon.locationStr)
+print("Socket del demonio=%s" % pyrodaemon.sockets)
+
+# Se registrara un demonio en el servidor de objetos
+serveruri=pyrodaemon.register(hostDemonio)
+print("URI del server=%s" % serveruri)
+
+# Se registrara el demonio con el servidor embebido 
+nameserverDaemon.nameserver.register("Host." + nombre,serveruri)  
+    
+# Se crea un loop para los demonios customizado
+while True:
+    print("Esperando por eventos...")
+    # crear un conjuto de sockets, por los cuales se estara esperando 
+    # (un conjuto que provee una lista rapiada para ser comparada)
+    nameserverSockets = set(nameserverDaemon.sockets)
+    pyroSockets = set(pyrodaemon.sockets)
+    # Solo el broadcast server es dicretamente usable como un select() objeto
+    # select() se usa como un comando que espera hasta que una entrada llegue
+    # esta entrada puede ser bien una entrada de IO rw, r,rw+
+    rs=[broadcastServer]  
+    rs.extend(nameserverSockets)
+    rs.extend(pyroSockets)
+    rs,_,_ = select.select(rs,[],[],3)
+    eventsForNameserver=[]
+    eventsForDaemon=[]
+    for s in rs:
+        if s is broadcastServer:
+            print("Servidor de Broadcast recibio una solicitud")
+            broadcastServer.processRequest()
+        elif s in nameserverSockets:
+            eventsForNameserver.append(s)
+        elif s in pyroSockets:
+            eventsForDaemon.append(s)
+    if eventsForNameserver:
+        print("Nameserver recibio una solicitud")
+        nameserverDaemon.events(eventsForNameserver)
+    if eventsForDaemon:
+        print("Demonio Host recibio una solicitud")
+        pyrodaemon.events(eventsForDaemon)
+
+
+nameserverDaemon.close()
+broadcastServer.close()
+pyrodaemon.close()
+print("done")
+
+#if len(host.getListNS()) != 0:    
+#    for naming in host.getListNS():
+#        print naming
