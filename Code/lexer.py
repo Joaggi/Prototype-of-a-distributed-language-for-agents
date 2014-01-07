@@ -10,7 +10,7 @@ def analizarEntrada(nombreArchivo):
 		tokens=[]
 		for token in line.rstrip().split(' '):
 			if analizarToken(token)==False:
-				print 'Error en la linea %d: El token "%s" es invalido' %(i,token)
+				print 'Error en "'+nombreArchivo+'", linea %d: El token "%s" es invalido' %(i,token)
 				return None
 			else:
 				tokens.append(token)
