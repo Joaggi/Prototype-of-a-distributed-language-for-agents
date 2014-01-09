@@ -4,16 +4,23 @@ Created on Mon Dec 09 21:46:17 2013
 
 @author: Alejandro
 """
-import Pyro4
-
-# we're using custom classes, so need to use pickle
-Pyro4.config.SERIALIZER='pickle'
-
-# we're using custom classes, so need to use pickle
-Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
-
 
 class Racionalidad(object):
-    """ Clase definidora de la racionalidad de los gantes. """
+	
     
     
+	def __init__(self, agentId):
+		self.id = agentId
+		self.agentId = agentId
+
+	def getAgentId(self):
+		return self.agentId
+
+	def getId(self):
+		return self.id
+
+	def getType(self): #this should be done with some sort of parent class but whatever
+		return 'arms'
+
+	def sayArms(self):
+		return 'I am Arms "' + self.id + '", and I am running on ' + str(self._pyroDaemon.locationStr)

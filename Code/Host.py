@@ -5,18 +5,41 @@ Created on Mon Dec 09 21:39:36 2013
 @author: Alejandro
 """
 import Pyro4
-
-# we're using custom classes, so need to use pickle
-Pyro4.config.SERIALIZER='pickle'
-
-# we're using custom classes, so need to use pickle
-Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
-
+import Agente
+import Racionalidad
+import Movilidad
+import random
 
 class Host(object):
     """Esta clase se encargara de todas las funciones de 
     definicion del ..."""
-    
+
+    def resolve(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
+        ret = self.find(name)
+        if(ret == False):
+            print('Warning!: object not in this host. This will affect performance.')
+            for host in self.listNS.keys():
+                findHost = Pyro4.Proxy(Pyro4.locateNS(host).list()['host.' + self.nombre])
+                ret = findHost.find(name)
+                if(ret):
+                    return ret
+        return ret
+
+
+    """ returns uri of object or false """
+    def find(self, name):
+        try:
+            return self.listAgentes[name]
+        except:
+            try:
+                return self.listMovilidad[name]
+            except:
+                try:
+                    return self.listRacionalidad[name]
+                except:
+                    return False
+
+
     def __init__(self , nombre):   
         self.nombre = nombre
         self.listNS = {}
@@ -57,72 +80,105 @@ class Host(object):
         """  """
         return self.listAgentes;
     
-    def addAgente(self,agente):
-        """ """
-        try:
-            if self.listAgentes[agente.getNombre()]:
-                print "El Agente existe en la lista"
-        except KeyError:
-            self.listAgentes[agente.getNombre()] = agente
-    
+    def addAgente(self,agente, create = True):
+
+        movilidadId = 'legs_' + agente
+        racionalidadId = 'arms_' + agente
+        hostUri = 'PYRO:' + self._pyroId + '@' + self._pyroDaemon.locationStr
+        agent = Agente.Agente(agente, movilidadId, racionalidadId, hostUri)
+        if(create):
+            self.addRacionalidad(racionalidadId)
+            self.addMovilidad(movilidadId)
+
+        print('Adding head ' + agent.getNombre() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+        uri = self._pyroDaemon.register(agent)
+        self.listAgentes[agent.getNombre()] = uri.asString()
+        return uri.asString()
+
+
     def setListAgente(self, lAgente):
-        self.listAgente = lAgente
+        self.listAgentes = lAgente
         
     def deleteAgente(self,nombre):
-        """ """
-        try:
-            del self.listAgente[nombre]
-            print "Se elimino el Agente de la lista"
-        except KeyError:
-            print "No existe el Agente en la lista"
-        
+        uri = self.listAgentes[nombre]
+        print('Removing ' + nombre + ' from Daemon at ' + self._pyroDaemon.locationStr)
+        self._pyroDaemon.unregister(uri[5:uri.find('@')])
+        self.listAgentes.pop(nombre)
             
     def getListMovilidad(self,):
         """ """
         return self.listMovilidad;
         
-    def addMovilidad(self,movilidad):
-        """ """
-        try:
-            if self.listMovilidad[movilidad.getNombre()]:
-                print "La movilidad existe en la lista"
-        except KeyError:
-            self.listMovilidad[movilidad.getNombre()] = movilidad
+    def addMovilidad(self,movilidadId): 
+        movilidad = Movilidad.Movilidad(movilidadId)
+        print('Adding Movility ' + movilidad.getId() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+        uri = self._pyroDaemon.register(movilidad)
+        self.listMovilidad[movilidad.getId()] = uri.asString()
 
     def setListMovilidad(self, lMovilidad):
         self.listMovilidad = lMovilidad
         
     def deleteMovilidad(self,nombre):
-        """ """
-        try:
-            del self.listMovilidad[nombre]
-            print "Se elimino la movilidad de la lista"
-        except KeyError:
-            print "No existe la movilidad en la lista"
+        uri = self.listMovilidad[nombre]
+        print('Removing ' + nombre + ' from Daemon at ' + self._pyroDaemon.locationStr)
+        self._pyroDaemon.unregister(uri[5:uri.find('@')])
+        self.listMovilidad.pop(nombre)
+            
         
             
-    def getListRacionalidad(self,):
-        """ """
-        return self.listRacionalidad;
+    def getListRacionalidad(self):
+        return self.listRacionalidad
+
         
-    def addRacionalidad(self,racionalidad):
-        """ """
-        try:
-            if self.listRacionalidad[racionalidad.getNombre()]:
-                print "La racionalidad existe en la lista"
-        except KeyError:
-            self.listRacionalidad[racionalidad.getNombre()] = racionalidad
+    def addRacionalidad(self,racionalidadId):
+        racionalidad = Racionalidad.Racionalidad(racionalidadId)
+        print('Adding rationality ' + racionalidad.getId() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+        uri = self._pyroDaemon.register(racionalidad)
+        self.listRacionalidad[racionalidad.getId()] = uri.asString()
         
     def setListRacionalidad(self, lRacionalidad):
         self.listRacionalidad = lRacionalidad
             
     def deleteRacionalidad(self,nombre):
-        """ """
+        uri = self.listRacionalidad[nombre]
+        print('Removing ' + nombre + ' from Daemon at ' + self._pyroDaemon.locationStr)
+        self._pyroDaemon.unregister(uri[5:uri.find('@')])
+        self.listRacionalidad.pop(nombre)
+     
+    def moveAgente(self, nombre, hostTo):  
         try:
-            del self.listRacionalidad[nombre]
-            print "Se elimino la racionalidad de la lista"
-        except KeyError:
-            print "No existe la racionalidad en la lista"
-        
-    
-    
+            uri = self.listAgentes[nombre]
+            print('Moviendo ' + nombre + ' to ' + hostTo + '...')
+            self.deleteAgente(nombre)
+            newHost = Pyro4.Proxy(Pyro4.locateNS(hostTo).list()['host.' + self.nombre])
+            return newHost.addAgente(nombre, False)
+        except:
+            print('No existe el agente en este Host')
+
+    def moveMovilidad(self, nombre, hostTo):  
+        try:
+            uri = self.listMovilidad[nombre]
+            print('Moviendo ' + nombre + ' to ' + hostTo + '...')
+            self.deleteMovilidad(nombre)
+            newHost = Pyro4.Proxy(Pyro4.locateNS(hostTo).list()['host.' + self.nombre])
+            newHost.addMovilidad(nombre)
+        except:
+            print('No existe la movilidad en este Host')
+
+    def moveRacionalidad(self, nombre, hostTo):  
+        try:
+            uri = self.listRacionalidad[nombre]
+            print('Moviendo ' + nombre + ' to ' + hostTo + '...')
+            self.deleteRacionalidad(nombre)
+            newHost = Pyro4.Proxy(Pyro4.locateNS(hostTo).list()['host.' + self.nombre])
+            newHost.addRacionalidad(nombre)
+        except:
+            print('No existe la racionalidad en este Host')
+
+    def disperseAgente(self, agentId):
+        agent = Pyro4.Proxy(self.listAgentes[agentId])
+        movilidadId = agent.getMovilidadId()
+        racionalidadId = agent.getRacionalidadId()
+        self.moveMovilidad(movilidadId, random.sample(self.listNS.keys(), 1)[0])
+        self.moveRacionalidad(racionalidadId, random.sample(self.listNS.keys(), 1)[0])
+        return self.moveAgente(agentId, random.sample(self.listNS.keys(), 1)[0])
