@@ -56,9 +56,17 @@ print("Obteniendo el nombre del servidor o nameserver (ns), uri=%s" % nameserver
 print("Localizacion del demonio ns string=%s" % nameserverDaemon.locationStr)
 print("Demonio de socket ns=%s" % nameserverDaemon.sockets)
 print("Demonio de socket bc=%s (fileno %d)" % (broadcastServer.sock, broadcastServer.fileno()))
-        
-        
+   
+if(banderaHost):    
+    for nameServer,nameServer_uri in hostNS.getListNS().items():
+        nsDisperso = Pyro4.Proxy(nameServer_uri)
+        for host, hostDisperso_uri in nsDisperso.list(prefix="host.").items():
+            hostDisperso = Pyro4.Proxy(hostDisperso_uri) 
+            hostDisperso.addNS(mi_ip, nameserverUri)
+    
 hostDemonio.addNS(mi_ip, nameserverUri)
+
+            
 #Metodo pyro
 #Crear un demonio en pyro
 pyrodaemon=Pyro4.core.Daemon(host=mi_ip)
@@ -70,7 +78,7 @@ serveruri=pyrodaemon.register(hostDemonio)
 print("URI del server=%s" % serveruri)
 
 # Se registrara el demonio con el servidor embebido 
-nameserverDaemon.nameserver.register("Host." + nombre,serveruri)  
+nameserverDaemon.nameserver.register("host." + nombre,serveruri)  
     
 # Se crea un loop para los demonios customizado
 while True:
