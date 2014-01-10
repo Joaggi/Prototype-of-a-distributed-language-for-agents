@@ -17,17 +17,22 @@ class Host(object):
     def resolve(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
         ret = self.find(name)
         if(ret == False):
-            print('Warning!: object not in this host. This will affect performance.')
-            for host in self.listNS.keys():
-                findHost = Pyro4.Proxy(Pyro4.locateNS(host).list()['host.' + self.nombre])
-                ret = findHost.find(name)
+            print('Precaucion!: objeto no esta en el host. Esto puede afectar el rendimiento.')
+            for nameServer,nameServer_uri in self.listNS.items():
+                try:                
+                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
+                    ret = findHost.find(name)
+                except:
+                    print "Error: no se localizo el host"
+                    ret = False
                 if(ret):
                     return ret
         return ret
 
 
-    """ returns uri of object or false """
+    
     def find(self, name):
+        """ returns uri of object or false """
         try:
             return self.listAgentes[name]
         except:

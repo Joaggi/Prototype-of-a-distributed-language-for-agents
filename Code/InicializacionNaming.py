@@ -72,16 +72,34 @@ hostDemonio.addNS(mi_ip, nameserverUri)
 pyrodaemon=Pyro4.core.Daemon(host=mi_ip)
 print("Localizacion del demonio str=%s" % pyrodaemon.locationStr)
 print("Socket del demonio=%s" % pyrodaemon.sockets)
-
 # Se registrara un demonio en el servidor de objetos
 serveruri=pyrodaemon.register(hostDemonio)
 print("URI del server=%s" % serveruri)
+host_proxy = Pyro4.Proxy(serveruri)
 
 # Se registrara el demonio con el servidor embebido 
 nameserverDaemon.nameserver.register("host." + nombre,serveruri)  
     
 # Se crea un loop para los demonios customizado
 while True:
+    #Verificar conexion con host
+    listNS = hostDemonio.getListNS().copy()
+    listNS.pop(mi_ip)
+    for host_iter,host_iter_uri in listNS.items():    
+        locationHost = Pyro4.URI(host_iter_uri).location
+        remoteDeamon = Pyro4.Proxy('PYRO:' + Pyro4.constants.DAEMON_NAME + '@' + locationHost)
+        try:
+            remoteDeamon.ping()
+        except:
+            print "Se ha perdido la conexion con: " + locationHost
+            hostDemonio.deleteNS(locationHost[:locationHost.find(":")])
+            
+                
+    #Verificar 
+    
+    
+    
+    
     print("Esperando por eventos...")
     # crear un conjuto de sockets, por los cuales se estara esperando 
     # (un conjuto que provee una lista rapiada para ser comparada)
@@ -110,6 +128,7 @@ while True:
     if eventsForDaemon:
         print("Demonio Host recibio una solicitud")
         pyrodaemon.events(eventsForDaemon)
+        
 
 
 nameserverDaemon.close()

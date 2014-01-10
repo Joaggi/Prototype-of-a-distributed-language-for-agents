@@ -8,9 +8,12 @@ import Pyro4
 
 
 class Agente(object):
+    """"""
+    
     tipoMovilidad = ["constante","uniforme","exponencial"]    
     
     def __init__(self,nombre, movilidadId, racionalidadId, hostUri):
+        ""
         self.hostUri = hostUri
         self.nombre = nombre
         self.movilidadId = movilidadId
@@ -36,7 +39,7 @@ class Agente(object):
         racionalidadUri = Pyro4.Proxy(self.hostUri).resolve(self.racionalidadId)
         movilidadUri =  Pyro4.Proxy(self.hostUri).resolve(self.movilidadId)
         if (racionalidadUri == False or movilidadUri == False):
-            return 'Sme parts missing'
+            return 'Algo esta perdido'
         racionalidad = Pyro4.Proxy(racionalidadUri)
         movilidad = Pyro4.Proxy(movilidadUri)
         return [racionalidad.sayArms(), movilidad.sayLegs()]
