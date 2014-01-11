@@ -5,7 +5,8 @@ Created on Wed Nov 20 11:49:14 2013
 @author: Alejandro Gallego Hola mundo
 """
 import Pyro4
-
+import threading
+import time
 
 class Agente(object):
     """"""
@@ -18,6 +19,8 @@ class Agente(object):
         self.nombre = nombre
         self.movilidadId = movilidadId
         self.racionalidadId = racionalidadId
+        thread = threading.Thread(target = self.wait2Seconds, args = [])
+        thread.start()
 
     def getMovilidadId(self):
         return self.movilidadId
@@ -43,3 +46,14 @@ class Agente(object):
         racionalidad = Pyro4.Proxy(racionalidadUri)
         movilidad = Pyro4.Proxy(movilidadUri)
         return [racionalidad.sayArms(), movilidad.sayLegs()]
+
+    def disperseMySelf(self):
+        return Pyro4.Proxy(self.hostUri).disperseAgente(self.nombre)
+
+    def printSomething(self):
+        print('hola')
+
+    def wait2Seconds(self):
+        time.sleep(2)
+        print('hello')
+        self.disperseMySelf()
