@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{hyperref} 
+\usepackage{color}
+\usepackage{listings}
+\lstset{ %
+language=C++,                % choose the language of the code
+basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+numbers=left,                   % where to put the line-numbers
+numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+stepnumber=1,                   % the step between two line-numbers. If it is 1 each line will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+frame=single,           % adds a frame around the code
+tabsize=2,          % sets default tabsize to 2 spaces
+captionpos=b,           % sets the caption-position to bottom
+breaklines=true,        % sets automatic line breaking
+breakatwhitespace=false,    % sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)}          % if you want to add a comment within your code
+}
+
+\begin{document}
+\title{Documentación de código}
+\author{Alegandro Gallego, Sergio Pérez, Jhon Ramírez}
+\date{Aqui va la fecha}
+\maketitle
+
+\section{Documentación}
+A continuación se presenta la descripción del comportamiento de cada una de las clases, así como el objetivo de cada uno de los métodos que las conforman, incluyendo sus parámetros de entrada y sus parametros de salida.
+
+\subsection{Agente}
+Representa un agente en el sistema. Está conformado por un componente de \textbf{Racionalidad}, y un componente de \textbf{Movilidad}, tiene la característica de dispersarse en la red, esto es, mover cada una de sus partes a otros nodos en la red, cada cierto intervalo de tiempo, determinado por una función de distribución de probabilidad.\\
+
+\begin{lstlisting}
+import Pyro4
+
+class Agente(object):
+    
+    tipoMovilidad = ["constante","uniforme","exponencial"]    
+    
+    def __init__(self,nombre, movilidadId, racionalidadId, hostUri):
+        self.hostUri = hostUri
+        self.nombre = nombre
+        self.movilidadId = movilidadId
+        self.racionalidadId = racionalidadId
+
+    def getMovilidadId(self):
+        return self.movilidadId
+
+    def getRacionalidadId(self):
+        return self.racionalidadId
+        
+    def getNombre(self):
+        return self.nombre
+        
+    def getType(self):
+        return 'head'
+
+    def getPyroId(self):
+        return str(self._pyroId)
+
+    def doIt(self):
+        ##place some call to legs and arms
+        racionalidadUri = Pyro4.Proxy(self.hostUri).resolve(self.racionalidadId)
+        movilidadUri =  Pyro4.Proxy(self.hostUri).resolve(self.movilidadId)
+        if (racionalidadUri == False or movilidadUri == False):
+            return 'Algo esta perdido'
+        racionalidad =x Pyro4.Proxy(racionalidadUri)
+        movilidad = Pyro4.Proxy(movilidadUri)
+        return [racionalidad.sayArms(), movilidad.sayLegs()]
+\end{lstlisting}
+
+\subsubsection*{Métodos}
+A continuación se presentan los métodos de la clase Agente, se proporciona una descripción del objetivo que se persigue en cada método, así como la descripción de sus parámetros de entrada, y sus parámetros de salida que retorna una vez termine su ejecución.
+\subsubsection{\textbf{init}(\textit{nombre}, \textit{movilidadId}, \textit{racionalidadId}, \textit{hostUri})}
+Es el constructor de la clase, y a través de este método se permite instanciar objetos de esta clase.
+\begin{lstlisting}
+def __init__(self,nombre, movilidadId, racionalidadId, hostUri):
+	self.hostUri = hostUri
+	self.nombre = nombre
+	self.movilidadId = movilidadId
+	self.racionalidadId = racionalidadId
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre con el que se identifica el Agente en la red.
+\item \textit{movilidadId}: Identificador del objeto que representa la parte correspondiente a la capacidad del agente de moverse en la red.
+\item \textit{racionalidadId}: Identificador del objeto que representa la parte correspondiente a la capacidad del agente de tomar decisiones.
+\item \textit{hostUri}: Identificador de recurso uniforme del \textit{Host} donde está alojado el agente en un instante de tiempo específico.
+\end{itemize}
+\subsubsection{\textbf{getMovilidad}()}
+Permite a los demás objetos en la red obtener el identificador del objeto de la movilidad del agente.
+\begin{lstlisting}
+def getMovilidadId(self):
+	return self.movilidadId
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna el identificador del objeto que representa la parte correspondiente a la capacidad del agente de moverse en la red.
+\subsubsection{\textbf{getRacionalidad}()}
+Permite a los demás objetos en la red obtener el identificador del objeto de la racionalidad del agente.
+\begin{lstlisting}
+def getRacionalidadId(self):
+	return self.racionalidadId
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna el identificador del objeto que representa la parte correspondiente a la capacidad del agente de tomar decisiones.
+\subsubsection{nombre}
+\begin{lstlisting}
+codigo
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\subsubsection*{Retorno}
+\end{document}
