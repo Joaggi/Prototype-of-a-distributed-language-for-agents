@@ -24,3 +24,6 @@ class Movilidad(object):
     
     def sayLegs(self):
         return 'I am Legs "' + self.id + '", and I am running on ' + str(self._pyroDaemon.locationStr)
+
+    def howMuchToWait(self):
+        return 5

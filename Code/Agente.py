@@ -19,7 +19,7 @@ class Agente(object):
         self.nombre = nombre
         self.movilidadId = movilidadId
         self.racionalidadId = racionalidadId
-        thread = threading.Thread(target = self.wait2Seconds, args = [])
+        thread = threading.Thread(target = self.disperseFromMovilidad, args = [])
         thread.start()
 
     def getMovilidadId(self):
@@ -53,7 +53,15 @@ class Agente(object):
     def printSomething(self):
         print('hola')
 
-    def wait2Seconds(self):
-        time.sleep(2)
-        print('hello')
+    def disperseFromMovilidad(self):
+        movilidadUri =  Pyro4.Proxy(self.hostUri).resolve(self.movilidadId)
+        if(movilidadUri == False):
+            print 'La puta movilidad no se encuentra!'
+            time.sleep(2)
+            thread = threading.Thread(target = self.disperseFromMovilidad, args = [])
+            thread.start()
+            return False
+        movilidad = Pyro4.Proxy(movilidadUri)
+        tiempo = movilidad.howMuchToWait()
+        time.sleep(tiempo)
         self.disperseMySelf()
