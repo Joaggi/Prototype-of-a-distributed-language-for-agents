@@ -14,6 +14,17 @@ class Host(object):
     """Esta clase se encargara de todas las funciones de 
     definicion del ..."""
 
+    def getNombre(self):
+        """ """
+        return self.nombre
+    
+    def __init__(self , nombre):   
+        self.nombre = nombre
+        self.listNS = {}
+        self.listAgentes = {}
+        self.listMovilidad = {}
+        self.listRacionalidad = {}
+    
     def resolve(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
         ret = self.find(name)
         if(ret == False):
@@ -25,7 +36,7 @@ class Host(object):
                 except:
                     print "Error: no se localizo el host"
                     ret = False
-                if(ret):
+                if(ret!=False):
                     return ret
         return ret
 
@@ -42,20 +53,9 @@ class Host(object):
                 try:
                     return self.listRacionalidad[name]
                 except:
-                    return False
-
-
-    def __init__(self , nombre):   
-        self.nombre = nombre
-        self.listNS = {}
-        self.listAgentes = {}
-        self.listMovilidad = {}
-        self.listRacionalidad = {}
+                    return False    
     
-    def getNombre(self):
-        """ """
-        return self.nombre
-    
+
     def getListNS(self):
         """ Se obtiene la lista de los naming space que define pyro
         en ellos se encuentra la direccion de cada uno de los hosts
@@ -86,20 +86,22 @@ class Host(object):
         return self.listAgentes;
     
     def addAgente(self,agente, create = True):
+        if(self.resolve(agente) == False):
+            movilidadId = 'legs_' + agente
+            racionalidadId = 'arms_' + agente
+            hostUri = 'PYRO:' + self._pyroId + '@' + self._pyroDaemon.locationStr
+            agent = Agente.Agente(agente, movilidadId, racionalidadId, hostUri)
+            if(create):
+                self.addRacionalidad(racionalidadId)
+                self.addMovilidad(movilidadId)
 
-        movilidadId = 'legs_' + agente
-        racionalidadId = 'arms_' + agente
-        hostUri = 'PYRO:' + self._pyroId + '@' + self._pyroDaemon.locationStr
-        agent = Agente.Agente(agente, movilidadId, racionalidadId, hostUri)
-        if(create):
-            self.addRacionalidad(racionalidadId)
-            self.addMovilidad(movilidadId)
-
-        print('Adding head ' + agent.getNombre() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
-        uri = self._pyroDaemon.register(agent)
-        self.listAgentes[agent.getNombre()] = uri.asString()
-        return uri.asString()
-
+            print('Adding head ' + agent.getNombre() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+            uri = self._pyroDaemon.register(agent)
+            self.listAgentes[agent.getNombre()] = uri.asString()
+            return uri.asString()
+        else:
+            #Corregir
+            return self.resolve(agente)
 
     def setListAgente(self, lAgente):
         self.listAgentes = lAgente
@@ -110,7 +112,7 @@ class Host(object):
         self._pyroDaemon.unregister(uri[5:uri.find('@')])
         self.listAgentes.pop(nombre)
             
-    def getListMovilidad(self,):
+    def getListMovilidad(self):
         """ """
         return self.listMovilidad;
         
@@ -187,3 +189,99 @@ class Host(object):
         self.moveMovilidad(movilidadId, random.sample(self.listNS.keys(), 1)[0])
         self.moveRacionalidad(racionalidadId, random.sample(self.listNS.keys(), 1)[0])
         return self.moveAgente(agentId, random.sample(self.listNS.keys(), 1)[0])
+        
+        
+    #Servicio
+    def searchHead(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
+        ret = self.findHead(name)
+        if(ret == False):
+            print('Precaucion!: Head del objeto no esta en el host. Esto puede afectar el rendimiento.')
+            for nameServer,nameServer_uri in self.listNS.items():
+                try:                
+                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
+                    ret = findHost.findHead(name)
+                except:
+                    print "Error: no se localizo el host"
+                    ret = False
+                if(ret != False):
+                    return [ret,Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre]]
+        return ret
+        
+    
+    def findHead(self, name):
+        """ returns uri of object or false """
+        try:
+            return self.listAgentes[name]
+        except:
+            return False   
+            
+    def searchMovilidad(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
+        ret = self.findMovilidad(name)
+        if(ret == False):
+            print('Precaucion!: Movilidad del objeto no esta en el host. Esto puede afectar el rendimiento.')
+            for nameServer,nameServer_uri in self.listNS.items():
+                try:                
+                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
+                    ret = findHost.findMovilidad(name)
+                except:
+                    print "Error: no se localizo el host"
+                    ret = False
+                if(ret != False):
+                    return [ret,Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre]]
+        return ret
+
+    
+    def findMovilidad(self, name):
+        """ returns uri of object or false """
+        try:
+            return self.listMovilidad[name]
+        except:
+            return False   
+            
+    def searchRacionalidad(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
+        ret = self.findRacionalidad(name)
+        if(ret == False):
+            print('Precaucion!: Movilidad del objeto no esta en el host. Esto puede afectar el rendimiento.')
+            for nameServer,nameServer_uri in self.listNS.items():
+                try:                
+                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
+                    ret = findHost.findRacionalidad(name)
+                except:
+                    print "Error: no se localizo el host"
+                    ret = False
+                if(ret != False):
+                    return ret
+        return ret
+        
+    
+    def findRacionalidad(self, name):
+        """ returns uri of object or false """
+        try:
+            return self.listRacionalidad[name]
+        except:
+            return False     
+    
+    #Funciones para la comunidad de agentes.
+    def retrieveAgente(self, agentId):
+        #Primero se recupera la cabeza o encabezado del agente.
+        agent = self.searchHead(agentId)
+        if(agent == False):
+            print 'No se encontro el agente'
+        else:
+            print 'Moviendo el encabezado al host ' + self.nombre
+            agent = self.moveAgente(agentId,self.listNS[self.nombre])
+            movilidadId = Pyro4.Proxy(agent).getMovilidadId()
+            [movilidad,hostMovilidad] = self.searchMovilidad(movilidadId)
+            if(movilidad == False):
+                print 'No se encontro la movilidad '
+                print 'Dado que no se encontro la movilidad no se procedera a encontrar la racionalidad'
+            else:
+                self.moveMovilidad(movilidadId, self.listNS[self.nombre])
+                racionalidadId = Pyro4.Proxy(agent).getRacionalidadId()
+                try:
+                    Pyro4.Proxy(hostMovilidad).getListMovilidad()[racionalidadId]
+                    self.moveRacionalidad(racionalidadId,self.listNS[self.nombre])
+                except:
+                    'La racionalidad no se encuentra con la movilidad por lo tanto no se podra mover'
+                    
+        return agent

@@ -22,29 +22,53 @@ Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
 class ComunidadAgentes(object):
     """ """
     idAgente = 1
-    def __init__(self,nombre):
+    
+    def __init__(self,nombre,servicioId, hostUri):
         """Constructor de la clase comunidad de agentes. """
         self.__nombre = nombre
         ComunidadAgentes.idAgente+=1
-        self.agente = {}
+        self.agentesId = []
+        self.servicioId = servicioId
+        self.hostUri = hostUri
         
-    def setServicio(self,servicio):
+    def setServicio(self,servicioId):
         """ Se asigna un servicio, de la clase Servicio, a la comunidad de agentes """
         print "Inicializo servicio"
-        self.servicio = servicio
+        self.servicioId = servicioId
         
     def getServicio(self):
         """ """
-        return self.servicio
+        return self.servicioId
         
     def getNombre(self):
         """ """
         return self.__nombre
         
-    def addAgente(self,agente,nombre):
+    def addAgente(self,agenteId):
         """ """
-        self.agente[nombre] = agente
+        self.agentesId.append(agenteId)
         
     def getAgente(self,nombre):
         """ """
-        return self.agente[nombre]
+        return self.agentesId[nombre]
+        
+    def getListAgente(self):
+        return self.agentesId
+        
+    def getPyroId(self):
+        return str(self._pyroId)
+        
+    def getMeetAgente(self, precioOfrecido):
+        host = Pyro4.Proxy(self.hostUri)
+        for agenteId in self.getListAgente():
+            agent = host.retrieveAgente(agenteId)
+            if(agent!=False):
+                try:
+                    racionalidad = Pyro4.Proxy(host.getListRacionalidad()[Pyro4.Proxy(agent).getRacionalidadId()])
+                    if (racionalidad.funcionUtilidad() <= precioOfrecido):
+                        print "Este agente cooperara"
+                    
+                except:
+                    "El agente no tiene racionalidad, por lo tanto no se puede negociar"
+                
+                

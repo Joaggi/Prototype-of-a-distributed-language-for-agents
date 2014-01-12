@@ -10,8 +10,12 @@ import time
 
 class Agente(object):
     """"""
+    LOSS = 'Algo esta perdido'
+    LOSSMOVILIDAD = 'La movilidad no se encuentra!'
     
-    tipoMovilidad = ["constante","uniforme","exponencial"]    
+    tipoMovilidad = ["constante","uniforme","exponencial"]  
+    
+    tipoFuncionUtilidad = ["polinomica", ]
     
     def __init__(self,nombre, movilidadId, racionalidadId, hostUri):
         ""
@@ -19,6 +23,7 @@ class Agente(object):
         self.nombre = nombre
         self.movilidadId = movilidadId
         self.racionalidadId = racionalidadId
+        
         thread = threading.Thread(target = self.disperseFromMovilidad, args = [])
         thread.start()
 
@@ -42,7 +47,7 @@ class Agente(object):
         racionalidadUri = Pyro4.Proxy(self.hostUri).resolve(self.racionalidadId)
         movilidadUri =  Pyro4.Proxy(self.hostUri).resolve(self.movilidadId)
         if (racionalidadUri == False or movilidadUri == False):
-            return 'Algo esta perdido'
+            return Agente.LOSS
         racionalidad = Pyro4.Proxy(racionalidadUri)
         movilidad = Pyro4.Proxy(movilidadUri)
         return [racionalidad.sayArms(), movilidad.sayLegs()]
@@ -56,7 +61,7 @@ class Agente(object):
     def disperseFromMovilidad(self):
         movilidadUri =  Pyro4.Proxy(self.hostUri).resolve(self.movilidadId)
         if(movilidadUri == False):
-            print 'La puta movilidad no se encuentra!'
+            print Agente.LOSSMOVILIDAD
             time.sleep(2)
             thread = threading.Thread(target = self.disperseFromMovilidad, args = [])
             thread.start()
@@ -65,3 +70,4 @@ class Agente(object):
         tiempo = movilidad.howMuchToWait()
         time.sleep(tiempo)
         self.disperseMySelf()
+    
