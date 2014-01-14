@@ -654,6 +654,66 @@ def addNS(self,ip,ns):
 \item \textit{host}: Dirección IP del host donde esta corriendo el name server "\textit{ns}"
 \item \textit{ns}: Name server que será agregado a la lista de name servers del host.
 \end{itemize}
+\subsubsection{\textbf{setListNS}(\textit{lNS})}
+Permite asignar la lista de name servers al host.
+\begin{lstlisting}
+def setListNS(self, lNS):
+	self.listNS = lNS
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{lNS}: Lista de name servers que se quiere asignar a este host.
+\end{itemize}
+\subsubsection{\textbf{deleteNS}(\textit{nombre})}
+Permite eliminar el name server con el nombre "\textit{nombre}" de la lista de name servers del host. Si no existe el name server en la lista, se produce una excepción.
+\begin{lstlisting}
+def deleteNS(self,nombre)
+	try:
+		del self.listNS[nombre]
+		print "Se elimino el NS de la lista"
+	except KeyError:
+		print "No existe el NS en la lista"
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre del name server que se quiere remover de la lista de name servers del host.
+\end{itemize}
+\subsubsection{\textbf{getListAgentes}()}
+Permite a los demás objetos en la red obtener la lista de las cabezas de los agentes que se encuentran en el host.
+\begin{lstlisting}
+def getListAgentes(self):
+	return self.listAgentes;
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna la lista de las cabezas de los agentes que se encuentran alojados en el host.
+\subsubsection{\textbf{addAgente}(\textit{agente}, \textit{create} = \textbf{True})}
+Adiciona a la lista de agentes el objeto "\textit{agente}". Si el agente ya existe en la red se retorna su identificador de recurso uniforme, si no existe, el agente se expone como objeto Pyro y se retorna la \textit{uri} resultante.
+\begin{lstlisting}
+def addAgente(self,agente, create = True):
+	if(self.resolve(agente) == False):
+		movilidadId = 'legs_' + agente
+		racionalidadId = 'arms_' + agente
+		hostUri = 'PYRO:' + self._pyroId + '@' + self._pyroDaemon.locationStr
+		agent = Agente.Agente(agente, movilidadId, racionalidadId, hostUri)
+		if(create):
+			self.addRacionalidad(racionalidadId)
+			self.addMovilidad(movilidadId)
+
+		print('Adding head ' + agent.getNombre() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+		uri = self._pyroDaemon.register(agent)
+		self.listAgentes[agent.getNombre()] = uri.asString()
+		return uri.asString()
+	else:
+		#Corregir
+		return self.resolve(agente)
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{agente}: Instancia de la clase objeto que será adicionada a la lista de agentes del host.
+\item \textit{create}: Parámetro que indica si se debe crear los componentes de movilidad y racionalidad del agente, y añadirlos a la lista de movilidades y racionalidades del host respectivamente. Por defecto es \textbf{True}.
+\end{itemize}
+\subsubsection*{Retorno}
+Retorna el identificador de recurso uniforme del objeto "\textit{agente}"
 
 \subsection{nombreclase.py}
 \begin{lstlisting}
@@ -665,5 +725,8 @@ Codigo
 codigo
 \end{lstlisting}
 \subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: 
+\end{itemize}
 \subsubsection*{Retorno}
 \end{document}

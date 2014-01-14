@@ -23,5 +23,9 @@
 \BOOKMARK [3][-]{subsubsection.1.4.4}{find\(name\)}{subsection.1.4}% 23
 \BOOKMARK [3][-]{subsubsection.1.4.5}{getListNS\(\)}{subsection.1.4}% 24
 \BOOKMARK [3][-]{subsubsection.1.4.6}{addNS\(host, ns\)}{subsection.1.4}% 25
-\BOOKMARK [2][-]{subsection.1.5}{nombreclase.py}{section.1}% 26
-\BOOKMARK [3][-]{subsubsection.1.5.1}{nombre\(\)}{subsection.1.5}% 27
+\BOOKMARK [3][-]{subsubsection.1.4.7}{setListNS\(lNS\)}{subsection.1.4}% 26
+\BOOKMARK [3][-]{subsubsection.1.4.8}{deleteNS\(nombre\)}{subsection.1.4}% 27
+\BOOKMARK [3][-]{subsubsection.1.4.9}{getListAgentes\(\)}{subsection.1.4}% 28
+\BOOKMARK [3][-]{subsubsection.1.4.10}{addAgente\(agente, create = True\)}{subsection.1.4}% 29
+\BOOKMARK [2][-]{subsection.1.5}{nombreclase.py}{section.1}% 30
+\BOOKMARK [3][-]{subsubsection.1.5.1}{nombre\(\)}{subsection.1.5}% 31
