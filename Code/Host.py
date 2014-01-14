@@ -62,13 +62,13 @@ class Host(object):
         que se encuentran esparcidos en la red ad-hoc"""
         return self.listNS;
         
-    def addNS(self,host,ns):
+    def addNS(self,ip,ns):
         """    """
         try:
-            if self.listNS[host]:
+            if self.listNS[ip]:
                 print "El NS existe en la lista"
         except KeyError:
-            self.listNS[host] = "PYRO:Pyro.NameServer@" + str(host)  +":"+ str(ns.port)
+            self.listNS[ip] = "PYRO:Pyro.NameServer@" + str(ip)  +":"+ str(ns.port)
             
     def setListNS(self, lNS):
         self.listNS = lNS
@@ -189,8 +189,6 @@ class Host(object):
         self.moveMovilidad(movilidadId, random.sample(self.listNS.keys(), 1)[0])
         self.moveRacionalidad(racionalidadId, random.sample(self.listNS.keys(), 1)[0])
         return self.moveAgente(agentId, random.sample(self.listNS.keys(), 1)[0])
-<<<<<<< HEAD
-=======
         
         
     #Servicio
@@ -287,4 +285,3 @@ class Host(object):
                     'La racionalidad no se encuentra con la movilidad por lo tanto no se podra mover'
                     
         return agent
->>>>>>> f138c4e5846f95c13e54b12bc69cf6ebfe12398f
