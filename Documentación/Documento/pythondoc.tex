@@ -32,13 +32,15 @@ escapeinside={\%*}{*)}          % if you want to add a comment within your code
 \maketitle
 
 \section{Documentación}
-A continuación se presenta la descripción del comportamiento de cada una de las clases, así como el objetivo de cada uno de los métodos que las conforman, incluyendo sus parámetros de entrada y sus parametros de salida.
+A continuación se presenta la descripción del comportamiento de cada una de los archivos del proyecto, así como el una descripción del objetivo que se persigue en cada método, incluyendo la descripción de sus parámetros de entrada, y sus parámetros de salida que retorna una vez termina su ejecución.
 
-\subsection{Agente}
-Representa un agente en el sistema. Está conformado por un componente de \textbf{Racionalidad}, y un componente de \textbf{Movilidad}, tiene la característica de dispersarse en la red, esto es, mover cada una de sus partes a otros nodos en la red, cada cierto intervalo de tiempo, determinado por una función de distribución de probabilidad.\\
+\subsection{Agente.py}
+Representa un agente en el sistema. Está conformado por un componente de \textbf{Racionalidad}, y un componente de \textbf{Movilidad}, tiene la característica de dispersarse en la red, esto es, mover cada una de sus componentes a otros nodos en la red, cada cierto intervalo de tiempo, determinado por una función de distribución de probabilidad.\\
 
 \begin{lstlisting}
 import Pyro4
+import threading
+import time
 
 class Agente(object):
     
@@ -49,6 +51,8 @@ class Agente(object):
         self.nombre = nombre
         self.movilidadId = movilidadId
         self.racionalidadId = racionalidadId
+        thread = threading.Thread(target = self.wait2Seconds, args = [])
+        thread.start()
 
     def getMovilidadId(self):
         return self.movilidadId
@@ -71,13 +75,13 @@ class Agente(object):
         movilidadUri =  Pyro4.Proxy(self.hostUri).resolve(self.movilidadId)
         if (racionalidadUri == False or movilidadUri == False):
             return 'Algo esta perdido'
-        racionalidad =x Pyro4.Proxy(racionalidadUri)
+        racionalidad = Pyro4.Proxy(racionalidadUri)
         movilidad = Pyro4.Proxy(movilidadUri)
         return [racionalidad.sayArms(), movilidad.sayLegs()]
 \end{lstlisting}
 
-\subsubsection*{Métodos}
-A continuación se presentan los métodos de la clase Agente, se proporciona una descripción del objetivo que se persigue en cada método, así como la descripción de sus parámetros de entrada, y sus parámetros de salida que retorna una vez termine su ejecución.
+\subsubsection*{\textbf{Métodos}}
+
 \subsubsection{\textbf{init}(\textit{nombre}, \textit{movilidadId}, \textit{racionalidadId}, \textit{hostUri})}
 Es el constructor de la clase, y a través de este método se permite instanciar objetos de esta clase.
 \begin{lstlisting}
@@ -89,9 +93,9 @@ def __init__(self,nombre, movilidadId, racionalidadId, hostUri):
 \end{lstlisting}
 \subsubsection*{Parámetros}
 \begin{itemize}
-\item \textit{nombre}: Nombre con el que se identifica el Agente en la red.
-\item \textit{movilidadId}: Identificador del objeto que representa la parte correspondiente a la capacidad del agente de moverse en la red.
-\item \textit{racionalidadId}: Identificador del objeto que representa la parte correspondiente a la capacidad del agente de tomar decisiones.
+\item \textit{nombre}: Nombre con el que se identifica el Agente en la red, debe ser único.
+\item \textit{movilidadId}: Identificador del objeto que representa el componente correspondiente a la capacidad del agente de moverse en la red.
+\item \textit{racionalidadId}: Identificador del objeto que representa el componente correspondiente a la capacidad del agente de tomar decisiones.
 \item \textit{hostUri}: Identificador de recurso uniforme del \textit{Host} donde está alojado el agente en un instante de tiempo específico.
 \end{itemize}
 \subsubsection{\textbf{getMovilidad}()}
@@ -101,7 +105,7 @@ def getMovilidadId(self):
 	return self.movilidadId
 \end{lstlisting}
 \subsubsection*{Retorno}
-Retorna el identificador del objeto que representa la parte correspondiente a la capacidad del agente de moverse en la red.
+Retorna el identificador del objeto que representa el componente correspondiente a la capacidad del agente de moverse en la red.
 \subsubsection{\textbf{getRacionalidad}()}
 Permite a los demás objetos en la red obtener el identificador del objeto de la racionalidad del agente.
 \begin{lstlisting}
@@ -109,8 +113,554 @@ def getRacionalidadId(self):
 	return self.racionalidadId
 \end{lstlisting}
 \subsubsection*{Retorno}
-Retorna el identificador del objeto que representa la parte correspondiente a la capacidad del agente de tomar decisiones.
-\subsubsection{nombre}
+Retorna el identificador del objeto que representa el componente correspondiente a la capacidad del agente de tomar decisiones.
+\subsubsection{\textbf{getNombre}()}
+Permite a los demás objetos en la red obtener el nombre del agente.
+\begin{lstlisting}
+def getNombre(self):
+	return self.nombre
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna el nombre con el que se puede identificar el agente en la red.
+\subsubsection{\textbf{getType}()}
+Permite a los demás objetos en la red reconocer si este objeto es la cabeza (componente fundamental) del agente.
+\begin{lstlisting}
+def getType(self):
+	return 'head'
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna la cadena de texto "\textit{head}" que indica que este objeto es la cabeza del agente.
+\subsubsection{\textbf{getPyroId}()}
+Permite a los demás objetos en la red obtener el identificador único del agente en el daemon.
+\begin{lstlisting}
+def getPyroId(self):
+	return str(self._pyroId)
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna el identificador único del agente.
+\subsubsection{\textbf{doIt}()}
+Permite identificar en que host de la red se encuentra el componente de racionalidad del agente, y en que host de la red se encuentra el componente de movilidad del agente.
+\begin{lstlisting}
+def doIt(self):
+	##place some call to legs and arms
+	racionalidadUri = Pyro4.Proxy(self.hostUri).resolve(self.racionalidadId)
+	movilidadUri =  Pyro4.Proxy(self.hostUri).resolve(self.movilidadId)
+	if (racionalidadUri == False or movilidadUri == False):
+		return 'Algo esta perdido'
+	racionalidad = Pyro4.Proxy(racionalidadUri)
+	movilidad = Pyro4.Proxy(movilidadUri)
+	return [racionalidad.sayArms(), movilidad.sayLegs()]
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna una lista, con dos elementos: una cadena de texto con la ubicación en la red del componente de racionalidad, y una cadena de texto con la ubicación en la red del componente de movilidad. Si no encuentra alguno de los componentes que conforman el agente, se retorna "Algo está perdido".
+\subsection{ComunidadAgentes.py}
+Representa una comunidad de agentes para un servicio específico, es decir, una comunidad de agentes es un conjunto de agentes que tienen la responsabilidad de garantizar la prestación de un sevicio determinado entre uno o más dispositivos en la red.
+\begin{lstlisting}
+from Agente import Agente
+from Servicio import Servicio
+
+import Pyro4
+
+# we're using custom classes, so need to use pickle
+Pyro4.config.SERIALIZER='pickle'
+
+# we're using custom classes, so need to use pickle
+Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
+
+class ComunidadAgentes(object):
+    idAgente = 1
+    def __init__(self,nombre):
+        self.__nombre = nombre
+        ComunidadAgentes.idAgente+=1
+        self.agente = {}
+        
+    def setServicio(self,servicio):
+        print "Inicializo servicio"
+        self.servicio = servicio
+        
+    def getServicio(self):
+        return self.servicio
+        
+    def getNombre(self):
+        return self.__nombre
+        
+    def addAgente(self,agente,nombre):
+        self.agente[nombre] = agente
+        
+    def getAgente(self,nombre):
+        return self.agente[nombre]
+\end{lstlisting}
+\subsubsection*{Métodos}
+\subsubsection{\textbf{init}(\textit{nombre})}
+Es el constructor de la clase, y a través de este método se permite instanciar objetos de esta clase.
+\begin{lstlisting}
+def __init__(self,nombre):
+	self.__nombre = nombre
+	ComunidadAgentes.idAgente+=1
+	self.agente = {}
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre con el que se identifica la comunidad de agentes en la red, debe ser único.
+\end{itemize}
+\subsubsection{\textbf{setServicio}(\textit{servicio})}
+Permite asignar el servicio que la comunidad de agentes debe proveer.
+\begin{lstlisting}
+def setServicio(self,servicio):
+	print "Inicializo servicio"
+	self.servicio = servicio
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{servicio}: Nombre del servicio que la comunidad de agentes debe proveer
+\end{itemize}
+\subsubsection{\textbf{getServicio}()}
+Permite a los demás objetos en la red obtener el nombre del servicio que la comunidad de agentes suministra.
+\begin{lstlisting}
+def getServicio(self):
+	return self.servicio
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna el nombre del servicio que la comunidad de agentes debe proveer a los dispositivos en la red
+\subsubsection{\textbf{getNombre}()}
+Permite a los demás objetos en la red obtener el nombre de la comunidad de agentes.
+\begin{lstlisting}
+def getNombre(self):
+    return self.__nombre
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna el nombre con el que se puede identificar la comunidad de agentes en la red.
+\subsubsection{\textbf{addAgente}(\textit{agente},\textit{nombre})}
+Permite agregar un nuevo agente a la comunidad de agentes con nombre "\textit{nombre}".
+\begin{lstlisting}
+def addAgente(self,agente,nombre):
+	self.agente[nombre] = agente
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{agente}: Instancia de la clase Agente. Representa el nuevo agente que será agregado a la comunidad de agentes.
+\item \textit{nombre}: Nombre del nuevo agente que formará parte de la comunidad de agentes.
+\end{itemize}
+\subsubsection{\textbf{getAgente}()}
+Permite a los demás objetos en la red obtener el agente cuyo nombre coincide con "\textit{nombre}", y que a su vez hace parte de la comunidad de agentes.
+\begin{lstlisting}
+def getAgente(self,nombre):
+    return self.agente[nombre]
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre del agente que se desea buscar en la comunidad de agentes.
+\end{itemize}
+\subsubsection*{Retorno}
+Retorna un objeto de la clase agente, el cuál es el resultado de la búsquedad en la comunidad de agentes de un agente que tenga como nombre "\textit{nombre}".
+\subsection{CrearHost.py}
+Esta clase se encarga de publicar una instancia de la clase "\textit{Host}" (Objeto python regular) para que pueda ser accesible remotamente, es decir convierte dicho objeto en un "\textbf{Objeto Pyro}".\\
+
+De manera muy sencilla el procedimiento es el siguiente: se crean uno o más objetos, los cuales se desean publicar como objetos Pyro, se crea un "\textit{daemon}", se registran los objetos con este, y se inicia el ciclo de las peticiones de dicho daemon.
+\begin{lstlisting}
+import Pyro4
+from Agente import Agente
+from Servicio import Servicio
+from ComunidadAgentes import ComunidadAgentes
+from Host import Host
+
+HostLogik = Host("Logik")
+#Metodo pyro
+#Se crea de la manera simple con serveSimple, sin tener en cuenta el host.
+Pyro4.Daemon.serveSimple({
+    HostLogik : "host." + str(HostLogik.getNombre())
+},host="0.0.0.0")
+\end{lstlisting}
+\subsubsection*{Métodos}
+\subsubsection{\textbf{serveSimple}(\textit{objetos},\textit{host})}
+Permite exponer un objeto regular de Python como un objeto Pyro, de tal manera que sea accesible remotamente a los demás objetos en la red.
+\begin{lstlisting}
+Pyro4.Daemon.serveSimple({
+    HostLogik : "host." + str(HostLogik.getNombre())
+},host="0.0.0.0")
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{objects}: Es un diccionario que contiene los objetos que serán expuestos, los cuales serán registrados como llave, y los nombres de dichos objetos, que serán registrados como valores.
+\item \textit{host}: Es el host donde se iniciará el daemon.
+\end{itemize}
+\subsection{Host.py}
+Representa un host en el sistema, es decir, un nodo de la red (instancias de esta clase). Tiene la propiedad de almacenar en su interior una lista de los diferentes componentes que conforman un agente (cabeza, movilidad y racionalidad), así como una lista de los name server que define Pyro.
+\begin{lstlisting}
+import Pyro4
+import Agente
+import Racionalidad
+import Movilidad
+import random
+
+class Host(object):
+
+    def getNombre(self):
+        return self.nombre
+    
+    def __init__(self , nombre):   
+        self.nombre = nombre
+        self.listNS = {}
+        self.listAgentes = {}
+        self.listMovilidad = {}
+        self.listRacionalidad = {}
+    
+    def resolve(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
+        ret = self.find(name)
+        if(ret == False):
+            print('Precaucion!: objeto no esta en el host. Esto puede afectar el rendimiento.')
+            for nameServer,nameServer_uri in self.listNS.items():
+                try:                
+                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
+                    ret = findHost.find(name)
+                except:
+                    print "Error: no se localizo el host"
+                    ret = False
+                if(ret!=False):
+                    return ret
+        return ret
+
+
+    
+    def find(self, name):
+        """ returns uri of object or false """
+        try:
+            return self.listAgentes[name]
+        except:
+            try:
+                return self.listMovilidad[name]
+            except:
+                try:
+                    return self.listRacionalidad[name]
+                except:
+                    return False    
+    
+
+    def getListNS(self):
+        return self.listNS;
+        
+    def addNS(self,ip,ns):
+        """    """
+        try:
+            if self.listNS[ip]:
+                print "El NS existe en la lista"
+        except KeyError:
+            self.listNS[ip] = "PYRO:Pyro.NameServer@" + str(ip)  +":"+ str(ns.port)
+            
+    def setListNS(self, lNS):
+        self.listNS = lNS
+        
+    def deleteNS(self,nombre):
+        """    """
+        try:
+            del self.listNS[nombre]
+            print "Se elimino el NS de la lista"
+        except KeyError:
+            print "No existe el NS en la lista"
+        
+    def getListAgentes(self):  
+        """  """
+        return self.listAgentes;
+    
+    def addAgente(self,agente, create = True):
+        if(self.resolve(agente) == False):
+            movilidadId = 'legs_' + agente
+            racionalidadId = 'arms_' + agente
+            hostUri = 'PYRO:' + self._pyroId + '@' + self._pyroDaemon.locationStr
+            agent = Agente.Agente(agente, movilidadId, racionalidadId, hostUri)
+            if(create):
+                self.addRacionalidad(racionalidadId)
+                self.addMovilidad(movilidadId)
+
+            print('Adding head ' + agent.getNombre() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+            uri = self._pyroDaemon.register(agent)
+            self.listAgentes[agent.getNombre()] = uri.asString()
+            return uri.asString()
+        else:
+            #Corregir
+            return self.resolve(agente)
+
+    def setListAgente(self, lAgente):
+        self.listAgentes = lAgente
+        
+    def deleteAgente(self,nombre):
+        uri = self.listAgentes[nombre]
+        print('Removing ' + nombre + ' from Daemon at ' + self._pyroDaemon.locationStr)
+        self._pyroDaemon.unregister(uri[5:uri.find('@')])
+        self.listAgentes.pop(nombre)
+            
+    def getListMovilidad(self):
+        """ """
+        return self.listMovilidad;
+        
+    def addMovilidad(self,movilidadId): 
+        movilidad = Movilidad.Movilidad(movilidadId)
+        print('Adding Movility ' + movilidad.getId() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+        uri = self._pyroDaemon.register(movilidad)
+        self.listMovilidad[movilidad.getId()] = uri.asString()
+
+    def setListMovilidad(self, lMovilidad):
+        self.listMovilidad = lMovilidad
+        
+    def deleteMovilidad(self,nombre):
+        uri = self.listMovilidad[nombre]
+        print('Removing ' + nombre + ' from Daemon at ' + self._pyroDaemon.locationStr)
+        self._pyroDaemon.unregister(uri[5:uri.find('@')])
+        self.listMovilidad.pop(nombre)
+            
+        
+            
+    def getListRacionalidad(self):
+        return self.listRacionalidad
+
+        
+    def addRacionalidad(self,racionalidadId):
+        racionalidad = Racionalidad.Racionalidad(racionalidadId)
+        print('Adding rationality ' + racionalidad.getId() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+        uri = self._pyroDaemon.register(racionalidad)
+        self.listRacionalidad[racionalidad.getId()] = uri.asString()
+        
+    def setListRacionalidad(self, lRacionalidad):
+        self.listRacionalidad = lRacionalidad
+            
+    def deleteRacionalidad(self,nombre):
+        uri = self.listRacionalidad[nombre]
+        print('Removing ' + nombre + ' from Daemon at ' + self._pyroDaemon.locationStr)
+        self._pyroDaemon.unregister(uri[5:uri.find('@')])
+        self.listRacionalidad.pop(nombre)
+     
+    def moveAgente(self, nombre, hostTo):  
+        try:
+            uri = self.listAgentes[nombre]
+            print('Moviendo ' + nombre + ' to ' + hostTo + '...')
+            self.deleteAgente(nombre)
+            newHost = Pyro4.Proxy(Pyro4.locateNS(hostTo).list()['host.' + self.nombre])
+            return newHost.addAgente(nombre, False)
+        except:
+            print('No existe el agente en este Host')
+
+    def moveMovilidad(self, nombre, hostTo):  
+        try:
+            uri = self.listMovilidad[nombre]
+            print('Moviendo ' + nombre + ' to ' + hostTo + '...')
+            self.deleteMovilidad(nombre)
+            newHost = Pyro4.Proxy(Pyro4.locateNS(hostTo).list()['host.' + self.nombre])
+            newHost.addMovilidad(nombre)
+        except:
+            print('No existe la movilidad en este Host')
+
+    def moveRacionalidad(self, nombre, hostTo):  
+        try:
+            uri = self.listRacionalidad[nombre]
+            print('Moviendo ' + nombre + ' to ' + hostTo + '...')
+            self.deleteRacionalidad(nombre)
+            newHost = Pyro4.Proxy(Pyro4.locateNS(hostTo).list()['host.' + self.nombre])
+            newHost.addRacionalidad(nombre)
+        except:
+            print('No existe la racionalidad en este Host')
+
+    def disperseAgente(self, agentId):
+        agent = Pyro4.Proxy(self.listAgentes[agentId])
+        movilidadId = agent.getMovilidadId()
+        racionalidadId = agent.getRacionalidadId()
+        self.moveMovilidad(movilidadId, random.sample(self.listNS.keys(), 1)[0])
+        self.moveRacionalidad(racionalidadId, random.sample(self.listNS.keys(), 1)[0])
+        return self.moveAgente(agentId, random.sample(self.listNS.keys(), 1)[0])
+        
+        
+    #Servicio
+    def searchHead(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
+        ret = self.findHead(name)
+        if(ret == False):
+            print('Precaucion!: Head del objeto no esta en el host. Esto puede afectar el rendimiento.')
+            for nameServer,nameServer_uri in self.listNS.items():
+                try:                
+                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
+                    ret = findHost.findHead(name)
+                except:
+                    print "Error: no se localizo el host"
+                    ret = False
+                if(ret != False):
+                    return [ret,Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre]]
+        return ret
+        
+    
+    def findHead(self, name):
+        """ returns uri of object or false """
+        try:
+            return self.listAgentes[name]
+        except:
+            return False   
+            
+    def searchMovilidad(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
+        ret = self.findMovilidad(name)
+        if(ret == False):
+            print('Precaucion!: Movilidad del objeto no esta en el host. Esto puede afectar el rendimiento.')
+            for nameServer,nameServer_uri in self.listNS.items():
+                try:                
+                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
+                    ret = findHost.findMovilidad(name)
+                except:
+                    print "Error: no se localizo el host"
+                    ret = False
+                if(ret != False):
+                    return [ret,Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre]]
+        return ret
+
+    
+    def findMovilidad(self, name):
+        """ returns uri of object or false """
+        try:
+            return self.listMovilidad[name]
+        except:
+            return False   
+            
+    def searchRacionalidad(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
+        ret = self.findRacionalidad(name)
+        if(ret == False):
+            print('Precaucion!: Movilidad del objeto no esta en el host. Esto puede afectar el rendimiento.')
+            for nameServer,nameServer_uri in self.listNS.items():
+                try:                
+                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
+                    ret = findHost.findRacionalidad(name)
+                except:
+                    print "Error: no se localizo el host"
+                    ret = False
+                if(ret != False):
+                    return ret
+        return ret
+        
+    
+    def findRacionalidad(self, name):
+        """ returns uri of object or false """
+        try:
+            return self.listRacionalidad[name]
+        except:
+            return False     
+    
+    #Funciones para la comunidad de agentes.
+    def retrieveAgente(self, agentId):
+        #Primero se recupera la cabeza o encabezado del agente.
+        agent = self.searchHead(agentId)
+        if(agent == False):
+            print 'No se encontro el agente'
+        else:
+            print 'Moviendo el encabezado al host ' + self.nombre
+            agent = self.moveAgente(agentId,self.listNS[self.nombre])
+            movilidadId = Pyro4.Proxy(agent).getMovilidadId()
+            [movilidad,hostMovilidad] = self.searchMovilidad(movilidadId)
+            if(movilidad == False):
+                print 'No se encontro la movilidad '
+                print 'Dado que no se encontro la movilidad no se procedera a encontrar la racionalidad'
+            else:
+                self.moveMovilidad(movilidadId, self.listNS[self.nombre])
+                racionalidadId = Pyro4.Proxy(agent).getRacionalidadId()
+                try:
+                    Pyro4.Proxy(hostMovilidad).getListMovilidad()[racionalidadId]
+                    self.moveRacionalidad(racionalidadId,self.listNS[self.nombre])
+                except:
+                    'La racionalidad no se encuentra con la movilidad por lo tanto no se podra mover'
+                    
+        return agent
+\end{lstlisting}
+\subsubsection*{Métodos}
+\subsubsection{\textbf{getNombre}()}
+Permite a los demás objetos en la red obtener el nombre del host.
+\begin{lstlisting}
+def getNombre(self):
+	return self.nombre
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna el nombre con el que se puede identificar el host en la red.
+\subsubsection{\textbf{init}(\textit{nombre})}
+Es el constructor de la clase, y a través de este método se permite instanciar objetos de esta clase.
+\begin{lstlisting}
+def __init__(self , nombre):   
+	self.nombre = nombre
+    self.listNS = {}
+	self.listAgentes = {}
+    self.listMovilidad = {}
+	self.listRacionalidad = {}
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre con el que se identifica el host en la red, debe ser único.
+\end{itemize}
+\subsubsection{\textbf{resolve}(\textit{name})}
+Realiza una búsqueda en todos los nodos que conforman la red permitiendo a los demás objetos en la red obtener el identificador de recurso uniforme (uri) del objeto cuyo nombre coincida con "\textit{name}".
+\begin{lstlisting}
+def resolve(self, name):
+	ret = self.find(name)
+	if(ret == False):
+		print('Precaucion!: objeto no esta en el host. Esto puede afectar el rendimiento.')
+		for nameServer,nameServer_uri in self.listNS.items():
+			try:                
+				findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
+				ret = findHost.find(name)
+			except:
+				print "Error: no se localizo el host"
+				ret = False
+			if(ret!=False):
+				return ret
+	return ret
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{name}: Nombre del objeto que se desea encontrar en la red.
+\end{itemize}
+\subsubsection*{Retorno}
+Retorna el identificador de recurso uniforme (uri) del objeto cuyo nombre coincida con el parámetro "\textit{name}". Si no se encuentra en la red dicho objeto, es decir, en ningún host, entonces se retorna Falso.
+\subsubsection{\textbf{find}(\textit{name})}
+Realiza una búsqueda en este host permitiendo a los demás objetos en la red obtener el identificador de recurso uniforme (uri) del objeto cuyo nombre coincida con "\textit{name}".
+\begin{lstlisting}
+def find(self, name):
+	try:
+		return self.listAgentes[name]
+	except:
+		try:
+			return self.listMovilidad[name]
+		 except:
+			try:
+				return self.listRacionalidad[name]
+			except:
+				return False
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{name}: Nombre del objeto que se desea encontrar en el host.
+\end{itemize}
+\subsubsection*{Retorno}
+Retorna el identificador de recurso uniforme (uri) del objeto cuyo nombre coincida con el parámetro "\textit{name}" que se encuentre ubicado en el host. Si no se encuentra en el host dicho objeto se retorna Falso.
+\subsubsection{\textbf{getListNS}()}
+Permite a los demás objetos en la red obtener la lista de los name servers definida por Pyro. En cada name server se encuentra la direccion de cada uno de los hosts que se encuentran distribuidos en la red.
+\begin{lstlisting}
+def getListNS(self):
+	return self.listNS;
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna la lista de los name server existentes hasta el momento.
+\subsubsection{\textbf{addNS}(\textit{host}, \textit{ns})}
+Añade a la lista de name servers del host un nuevo name server.
+\begin{lstlisting}
+def addNS(self,ip,ns):
+	try:
+		if self.listNS[ip]:
+			print "El NS existe en la lista"
+	except KeyError:
+		self.listNS[ip] = "PYRO:Pyro.NameServer@" + str(ip)  +":"+ str(ns.port)
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{host}: Dirección IP del host donde esta corriendo el name server "\textit{ns}"
+\item \textit{ns}: Name server que será agregado a la lista de name servers del host.
+\end{itemize}
+
+\subsection{nombreclase.py}
+\begin{lstlisting}
+Codigo
+\end{lstlisting}
+\subsubsection*{Métodos}
+\subsubsection{\textbf{nombre}()}
 \begin{lstlisting}
 codigo
 \end{lstlisting}

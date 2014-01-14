@@ -62,13 +62,13 @@ class Host(object):
         que se encuentran esparcidos en la red ad-hoc"""
         return self.listNS;
         
-    def addNS(self,host,ns):
+    def addNS(self,ip,ns):
         """    """
         try:
-            if self.listNS[host]:
+            if self.listNS[ip]:
                 print "El NS existe en la lista"
         except KeyError:
-            self.listNS[host] = "PYRO:Pyro.NameServer@" + str(host)  +":"+ str(ns.port)
+            self.listNS[ip] = "PYRO:Pyro.NameServer@" + str(ip)  +":"+ str(ns.port)
             
     def setListNS(self, lNS):
         self.listNS = lNS

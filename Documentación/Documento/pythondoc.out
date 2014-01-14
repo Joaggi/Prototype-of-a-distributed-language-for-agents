@@ -1,6 +1,27 @@
 \BOOKMARK [1][-]{section.1}{Documentaci\363n}{}% 1
-\BOOKMARK [2][-]{subsection.1.1}{Agente}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.1}{Agente.py}{section.1}% 2
 \BOOKMARK [3][-]{subsubsection.1.1.1}{init\(nombre, movilidadId, racionalidadId, hostUri\)}{subsection.1.1}% 3
 \BOOKMARK [3][-]{subsubsection.1.1.2}{getMovilidad\(\)}{subsection.1.1}% 4
 \BOOKMARK [3][-]{subsubsection.1.1.3}{getRacionalidad\(\)}{subsection.1.1}% 5
-\BOOKMARK [3][-]{subsubsection.1.1.4}{nombre}{subsection.1.1}% 6
+\BOOKMARK [3][-]{subsubsection.1.1.4}{getNombre\(\)}{subsection.1.1}% 6
+\BOOKMARK [3][-]{subsubsection.1.1.5}{getType\(\)}{subsection.1.1}% 7
+\BOOKMARK [3][-]{subsubsection.1.1.6}{getPyroId\(\)}{subsection.1.1}% 8
+\BOOKMARK [3][-]{subsubsection.1.1.7}{doIt\(\)}{subsection.1.1}% 9
+\BOOKMARK [2][-]{subsection.1.2}{ComunidadAgentes.py}{section.1}% 10
+\BOOKMARK [3][-]{subsubsection.1.2.1}{init\(nombre\)}{subsection.1.2}% 11
+\BOOKMARK [3][-]{subsubsection.1.2.2}{setServicio\(servicio\)}{subsection.1.2}% 12
+\BOOKMARK [3][-]{subsubsection.1.2.3}{getServicio\(\)}{subsection.1.2}% 13
+\BOOKMARK [3][-]{subsubsection.1.2.4}{getNombre\(\)}{subsection.1.2}% 14
+\BOOKMARK [3][-]{subsubsection.1.2.5}{addAgente\(agente,nombre\)}{subsection.1.2}% 15
+\BOOKMARK [3][-]{subsubsection.1.2.6}{getAgente\(\)}{subsection.1.2}% 16
+\BOOKMARK [2][-]{subsection.1.3}{CrearHost.py}{section.1}% 17
+\BOOKMARK [3][-]{subsubsection.1.3.1}{serveSimple\(objetos,host\)}{subsection.1.3}% 18
+\BOOKMARK [2][-]{subsection.1.4}{Host.py}{section.1}% 19
+\BOOKMARK [3][-]{subsubsection.1.4.1}{getNombre\(\)}{subsection.1.4}% 20
+\BOOKMARK [3][-]{subsubsection.1.4.2}{init\(nombre\)}{subsection.1.4}% 21
+\BOOKMARK [3][-]{subsubsection.1.4.3}{resolve\(name\)}{subsection.1.4}% 22
+\BOOKMARK [3][-]{subsubsection.1.4.4}{find\(name\)}{subsection.1.4}% 23
+\BOOKMARK [3][-]{subsubsection.1.4.5}{getListNS\(\)}{subsection.1.4}% 24
+\BOOKMARK [3][-]{subsubsection.1.4.6}{addNS\(host, ns\)}{subsection.1.4}% 25
+\BOOKMARK [2][-]{subsection.1.5}{nombreclase.py}{section.1}% 26
+\BOOKMARK [3][-]{subsubsection.1.5.1}{nombre\(\)}{subsection.1.5}% 27
