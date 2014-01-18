@@ -133,7 +133,6 @@ while True:
             elif s in pyroSockets:
                 eventsForDaemon.append(s)
         if eventsForNameserver:
-
             print("Nameserver recibio una solicitud")
             nameserverDaemon.events(eventsForNameserver)
         if eventsForDaemon:

@@ -1,7 +1,8 @@
-iniciar_programa
 crear_agente "Jorge"
 mover_agente "Ada"
 dispersar_agente "Grace"
 crear_comunidad "coders"
 iniciar_servicio "Mensajes"
 detener_servicio "Videoconferencia"
+elif token_list[0]=="crear_agente":
+			crear_agente(token_list[1])

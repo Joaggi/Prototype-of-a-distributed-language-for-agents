@@ -81,67 +81,80 @@ host_proxy = Pyro4.Proxy(serveruri)
 nameserverDaemon.nameserver.register("host." + nombre,serveruri)  
 
 verificacionDeTiempo = time.time()
-   
-   
+ 
 
+
+listNS = hostDemonio.getListNS().copy()
+listNS.pop(mi_ip)
+for host_iter,host_iter_uri in listNS.items():    
+    locationHost = Pyro4.URI(host_iter_uri).location
+    remoteDeamon = Pyro4.Proxy('PYRO:' + Pyro4.constants.DAEMON_NAME + '@' + locationHost)
+    try:
+        remoteDeamon.ping()
+    except:
+        print "Se ha perdido la conexion con: " + locationHost
+        hostDemonio.deleteNS(locationHost[:locationHost.find(":")])
+        print "prueba"
+print "1"
+verificacionDeTiempo = time.time()
+print "2"
+
+   
 # Se crea un loop para los demonios customizado
 while True:
-    try:
-        if(time.time()-verificacionDeTiempo >= 120):
-            #Verificar conexion con host
-            listNS = hostDemonio.getListNS().copy()
-            listNS.pop(mi_ip)
-            for host_iter,host_iter_uri in listNS.items():    
-                locationHost = Pyro4.URI(host_iter_uri).location
-                remoteDeamon = Pyro4.Proxy('PYRO:' + Pyro4.constants.DAEMON_NAME + '@' + locationHost)
-                try:
-                    remoteDeamon.ping()
-                except:
-                    print "Se ha perdido la conexion con: " + locationHost
-                    hostDemonio.deleteNS(locationHost[:locationHost.find(":")])
-                    print "prueba"
-            print "1"
-            verificacionDeTiempo = time.time()
-            print "2"
-                
-                    
-        #Verificar 
-        
-        
-        
-        
-        print("Esperando por eventos...")
-        # crear un conjuto de sockets, por los cuales se estara esperando 
-        # (un conjuto que provee una lista rapiada para ser comparada)
-        nameserverSockets = set(nameserverDaemon.sockets)
-        pyroSockets = set(pyrodaemon.sockets)
-        # Solo el broadcast server es dicretamente usable como un select() objeto
-        # select() se usa como un comando que espera hasta que una entrada llegue
-        # esta entrada puede ser bien una entrada de IO rw, r,rw+
-        rs=[broadcastServer]  
-        rs.extend(nameserverSockets)
-        rs.extend(pyroSockets)
-        rs,_,_ = select.select(rs,[],[],3)
-        eventsForNameserver=[]
-        eventsForDaemon=[]
-        for s in rs:
-            if s is broadcastServer:
-                print("Servidor de Broadcast recibio una solicitud")
-                broadcastServer.processRequest()
-            elif s in nameserverSockets:
-                eventsForNameserver.append(s)
-            elif s in pyroSockets:
-                eventsForDaemon.append(s)
-        if eventsForNameserver:
-
-            print("Nameserver recibio una solicitud")
-            nameserverDaemon.events(eventsForNameserver)
-        if eventsForDaemon:
-            print("Demonio Host recibio una solicitud")
-            pyrodaemon.events(eventsForDaemon)
+    if(time.time()-verificacionDeTiempo >= 120):
+        #Verificar conexion con host
+        listNS = hostDemonio.getListNS().copy()
+        listNS.pop(mi_ip)
+        for host_iter,host_iter_uri in listNS.items():    
+            locationHost = Pyro4.URI(host_iter_uri).location
+            remoteDeamon = Pyro4.Proxy('PYRO:' + Pyro4.constants.DAEMON_NAME + '@' + locationHost)
+            try:
+                remoteDeamon.ping()
+            except:
+                print "Se ha perdido la conexion con: " + locationHost
+                hostDemonio.deleteNS(locationHost[:locationHost.find(":")])
+                print "prueba"
+        print "1"
+        verificacionDeTiempo = time.time()
+        print "2"
             
-    except:
-        print "Ha ocurrido una excepcion"
+                
+    #Verificar 
+    
+    
+    
+    
+    print("Esperando por eventos...")
+    # crear un conjuto de sockets, por los cuales se estara esperando 
+    # (un conjuto que provee una lista rapiada para ser comparada)
+    nameserverSockets = set(nameserverDaemon.sockets)
+    pyroSockets = set(pyrodaemon.sockets)
+    # Solo el broadcast server es dicretamente usable como un select() objeto
+    # select() se usa como un comando que espera hasta que una entrada llegue
+    # esta entrada puede ser bien una entrada de IO rw, r,rw+
+    rs=[broadcastServer]  
+    rs.extend(nameserverSockets)
+    rs.extend(pyroSockets)
+    rs,_,_ = select.select(rs,[],[],3)
+    eventsForNameserver=[]
+    eventsForDaemon=[]
+    for s in rs:
+        if s is broadcastServer:
+            print("Servidor de Broadcast recibio una solicitud")
+            broadcastServer.processRequest()
+        elif s in nameserverSockets:
+            eventsForNameserver.append(s)
+        elif s in pyroSockets:
+            eventsForDaemon.append(s)
+    if eventsForNameserver:
+        print("Nameserver recibio una solicitud")
+        nameserverDaemon.events(eventsForNameserver)
+    if eventsForDaemon:
+        print("Demonio Host recibio una solicitud")
+        pyrodaemon.events(eventsForDaemon)
+        
+
 
 nameserverDaemon.close()
 broadcastServer.close()

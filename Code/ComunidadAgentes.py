@@ -23,12 +23,12 @@ class ComunidadAgentes(object):
     """ """
     idAgente = 1
     
-    def __init__(self,nombre,servicioId, hostUri):
+    def __init__(self,nombre, hostUri):
         """Constructor de la clase comunidad de agentes. """
         self.__nombre = nombre
         ComunidadAgentes.idAgente+=1
         self.agentesId = []
-        self.servicioId = servicioId
+        self.servicioId = None
         self.hostUri = hostUri
         
     def setServicio(self,servicioId):

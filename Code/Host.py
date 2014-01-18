@@ -9,6 +9,7 @@ import Agente
 import Racionalidad
 import Movilidad
 import random
+import ComunidadAgentes
 
 class Host(object):
     """Esta clase se encargara de todas las funciones de 
@@ -24,6 +25,7 @@ class Host(object):
         self.listAgentes = {}
         self.listMovilidad = {}
         self.listRacionalidad = {}
+        self.listComunidadAgentes = {}
     
     def resolve(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
         ret = self.find(name)
@@ -285,3 +287,29 @@ class Host(object):
                     'La racionalidad no se encuentra con la movilidad por lo tanto no se podra mover'
                     
         return agent
+
+
+    def getListComunidadAgentes(self):  
+        """  """
+        return self.listComunidadAgentes;
+    
+    def addComunidadAgentes(self,comunidad, create = True):
+        if(self.resolve(comunidad) == False):
+            hostUri = 'PYRO:' + self._pyroId + '@' + self._pyroDaemon.locationStr
+            comunidad = ComunidadAgentes.ComunidadAgentes(comunidad,hostUri)
+            print('Adding head ' + comunidad.getNombre() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+            uri = self._pyroDaemon.register(comunidad)
+            self.listComunidadAgentes[comunidad.getNombre()] = uri.asString()
+            return uri.asString()
+        else:
+            #Corregir
+            return self.resolve(comunidad)
+
+    def setListComunidadAgentes(self, lComunidadAgentes):
+        self.listComunidadAgentes = lComunidadAgentes
+        
+    def deleteComunidadAgentes(self,nombre):
+        uri = self.listComunidadAgentes[nombre]
+        print('Removing ' + nombre + ' from Daemon at ' + self._pyroDaemon.locationStr)
+        self._pyroDaemon.unregister(uri[5:uri.find('@')])
+        self.listComunidadAgentes.pop(nombre)
