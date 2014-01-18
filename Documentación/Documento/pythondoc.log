@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.12.14)  14 JAN 2014 14:21
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.12.14)  16 JAN 2014 09:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -548,25 +548,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 257--258
 
  []
 
-[7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 732.
- [18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 732.
+[7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21]
+[22]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 916.
+ [23]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 916.
  (./pythondoc.aux
 LaTeX Info: Redefining \. on input line 21.
 LaTeX Info: Redefining \% on input line 21.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 732.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 732.
-Package rerunfilecheck Info: File `pythondoc.out' has not changed.
-(rerunfilecheck)             Checksum: 519FE88E2760C743FA7C6EAF9350BD3A;2298.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 732.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 916.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 916.
+
+
+Package rerunfilecheck Warning: File `pythondoc.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `pythondoc.out':
+(rerunfilecheck)             Before: 18F3B2F2A5E0978B0778E66C22F873E1;3265
+(rerunfilecheck)             After:  75F7C08DE9033567968993EB17D3858A;3538.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 916.
  ) 
 Here is how much of TeX's memory you used:
- 8549 strings out of 495059
- 120843 string characters out of 3182029
+ 8678 strings out of 495059
+ 122807 string characters out of 3182029
  613559 words of memory out of 3000000
- 11080 multiletter control sequences out of 15000+200000
+ 11091 multiletter control sequences out of 15000+200000
  8909 words of font info for 31 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  33i,7n,58p,384b,1936s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -578,13 +586,14 @@ exmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/font
 s/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
-i10.pfb>
-Output written on pythondoc.pdf (18 pages, 220338 bytes).
+amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+
+Output written on pythondoc.pdf (23 pages, 250437 bytes).
 PDF statistics:
- 916 PDF objects out of 1000 (max. 8388607)
- 876 compressed objects within 9 object streams
- 587 named destinations out of 1000 (max. 500000)
- 249 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1113 PDF objects out of 1200 (max. 8388607)
+ 1065 compressed objects within 11 object streams
+ 705 named destinations out of 1000 (max. 500000)
+ 337 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -713,7 +713,191 @@ def addAgente(self,agente, create = True):
 \item \textit{create}: Parámetro que indica si se debe crear los componentes de movilidad y racionalidad del agente, y añadirlos a la lista de movilidades y racionalidades del host respectivamente. Por defecto es \textbf{True}.
 \end{itemize}
 \subsubsection*{Retorno}
-Retorna el identificador de recurso uniforme del objeto "\textit{agente}"
+Retorna el identificador de recurso uniforme del objeto (uri) "\textit{agente}" que ha sido agregado a la lista de agentes en el host.
+\subsubsection{\textbf{setListAgente}(\textit{lAgente})}
+Permite asignar la lista de agentes al host.
+\begin{lstlisting}
+def setListAgente(self, lAgente):
+	self.listAgentes = lAgente
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{lAgente}: Lista de agentes que seran asignadas al host.
+\end{itemize}
+\subsubsection{\textbf{deleteAgente}(\textit{nombre})}
+Permite eliminar el agente cuyo nombre coincida con "\textit{nombre}" de la lista de agentes del host.
+\begin{lstlisting}
+def deleteAgente(self,nombre):
+	uri = self.listAgentes[nombre]
+    print('Removing ' + nombre + ' from Daemon at ' + self._pyroDaemon.locationStr)
+	self._pyroDaemon.unregister(uri[5:uri.find('@')])
+    self.listAgentes.pop(nombre)
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre del agente que será removido de la lista de agentes del host.
+\end{itemize}
+\subsubsection{\textbf{getListMovilidad}()}
+Permite a los demás objetos en la red obtener la lista de los componentes de movilidad de los agentes existentes en la red, que se encuentran en el host.
+\begin{lstlisting}
+def getListMovilidad(self):
+	return self.listMovilidad;
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna la lista de los componentes de movilidad de los agentes que se encuentran alojados en el host.
+\subsubsection{\textbf{addMovilidad}(\textit{movilidadId})}
+Adiciona a la lista de componentes de movilidad de los agentes el componente de movilidad que coincida con con el id "\textit{movilidadId}".
+\begin{lstlisting}
+def addMovilidad(self,movilidadId): 
+	movilidad = Movilidad.Movilidad(movilidadId)
+	print('Adding Movility ' + movilidad.getId() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+	uri = self._pyroDaemon.register(movilidad)
+	self.listMovilidad[movilidad.getId()] = uri.asString()
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{movilidadId}: Id del componente de movilidad que se desea agregar a la lista de componentes de movilidad en el host.
+\end{itemize}
+\subsubsection{\textbf{setListMovilidad}(\textit{lMovilidad})}
+Permite asignar la lista de componentes de movilidad de los agentes al host.
+\begin{lstlisting}
+def setListMovilidad(self, lMovilidad):
+	self.listMovilidad = lMovilidad
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{lMovilidad}: Lista de los componentes de movilidad que serán asignados al host.
+\end{itemize}
+\subsubsection{\textbf{deleteMovilidad}(\textit{nombre})}
+Permite eliminar el componente de movilidad cuyo nombre coincida con "\textit{nombre}" de la lista de componentes de movilidad del host.
+\begin{lstlisting}
+def deleteMovilidad(self,nombre):
+	uri = self.listMovilidad[nombre]
+    print('Removing ' + nombre + ' from Daemon at ' + self._pyroDaemon.locationStr)
+	self._pyroDaemon.unregister(uri[5:uri.find('@')])
+    self.listMovilidad.pop(nombre)
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre del componente de movilidad que será removido de la lista de componentes de movilidad del host.
+\end{itemize}
+\subsubsection{\textbf{getListRacionalidad}()}
+Permite a los demás objetos en la red obtener la lista de los componentes de racionalidad de los agentes existentes en la red, que se encuentran en el host.
+\begin{lstlisting}
+def getListRacionalidad(self):
+	return self.listRacionalidad
+\end{lstlisting}
+\subsubsection*{Retorno}
+Retorna la lista de los componentes de racionalidad de los agentes que se encuentran alojados en el host.
+\subsubsection{\textbf{addRacionalidad}(\textit{racionalidadId})}
+Adiciona a la lista de componentes de racionalidad de los agentes el componente de racionalidad que coincida con con el id "\textit{racionalidadId}".
+\begin{lstlisting}
+def addRacionalidad(self,racionalidadId):
+	racionalidad = Racionalidad.Racionalidad(racionalidadId)
+    print('Adding rationality ' + racionalidad.getId() + ' to Daemon in ' + str(self._pyroDaemon.locationStr))
+	uri = self._pyroDaemon.register(racionalidad)
+    self.listRacionalidad[racionalidad.getId()] = uri.asString()
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{racionalidadId}: Id del componente de racionalidad que se desea agregar a la lista de componentes de racionalidad en el host.
+\end{itemize}
+\subsubsection{\textbf{setListRacionalidad}(\textit{lRacionalidad})}
+Permite asignar la lista de componentes de racionalidad de los agentes al host.
+\begin{lstlisting}
+def setListRacionalidad(self, lRacionalidad):
+	self.listRacionalidad = lRacionalidad
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{lRacionalidad}: Lista de los componentes de racionalidad que serán asignados al host.
+\end{itemize}
+\subsubsection{\textbf{deleteRacionalidad}(\textit{nombre})}
+Permite eliminar el componente de racionalidad cuyo nombre coincida con "\textit{nombre}" de la lista de componentes de racionalidad del host.
+\begin{lstlisting}
+def deleteRacionalidad(self,nombre):
+	uri = self.listRacionalidad[nombre]
+	print('Removing ' + nombre + ' from Daemon at ' + self._pyroDaemon.locationStr)
+	self._pyroDaemon.unregister(uri[5:uri.find('@')])
+	self.listRacionalidad.pop(nombre)
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre del componente de racionalidad que será removido de la lista de componentes de movilidad del host.
+\end{itemize}
+\subsubsection{\textbf{moveAgente}(\textit{nombre}, \textit{hostTo})}
+Permite mover el agente, de la lista de agentes del host, cuyo nombre coincida con ``\textit{nombre}'' al host de destino "\textit{hostTo}". Si el agente no existe en el host se lanza una excepción.
+\begin{lstlisting}
+def moveAgente(self, nombre, hostTo):  
+	try:
+		uri = self.listAgentes[nombre]
+		print('Moviendo ' + nombre + ' to ' + hostTo + '...')
+		self.deleteAgente(nombre)
+		newHost = Pyro4.Proxy(Pyro4.locateNS(hostTo).list()['host.' + self.nombre])
+		return newHost.addAgente(nombre, False)
+	except:
+		print('No existe el agente en este Host')
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre del agente que se desea mover.
+\item \textit{hostTo}: Host de destino al cual se desea mover el agente.
+\end{itemize}
+\subsubsection*{Retorno}
+Retorna el nuevo identificador de recurso uniforme (uri) del agente.
+\subsubsection{\textbf{moveMovilidad}(\textit{nombre}, \textit{hostTo})}
+Permite mover el componente de movilidad, de la lista de componentes de movilidad del host, cuyo nombre coincida con ``\textit{nombre}'' al host de destino "\textit{hostTo}". Si el componente de movilidad no existe en el host se lanza una excepción.
+\begin{lstlisting}
+def moveMovilidad(self, nombre, hostTo):  
+	try:
+		uri = self.listMovilidad[nombre]
+		print('Moviendo ' + nombre + ' to ' + hostTo + '...')
+		self.deleteMovilidad(nombre)
+		newHost = Pyro4.Proxy(Pyro4.locateNS(hostTo).list()['host.' + self.nombre])
+		newHost.addMovilidad(nombre)
+	except:
+		print('No existe la movilidad en este Host')
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre del componente de movilidad que se desea mover.
+\item \textit{hostTo}: Host de destino al cual se desea mover el componente de movilidad.
+\end{itemize}
+\subsubsection{\textbf{moveRacionalidad}(\textit{nombre}, \textit{hostTo})}
+Permite mover el componente de racionalidad, de la lista de componentes de racionalidad del host, cuyo nombre coincida con ``\textit{nombre}'' al host de destino "\textit{hostTo}". Si el componente de racionalidad no existe en el host se lanza una excepción.
+\begin{lstlisting}
+def moveRacionalidad(self, nombre, hostTo):  
+	try:
+		uri = self.listRacionalidad[nombre]
+		print('Moviendo ' + nombre + ' to ' + hostTo + '...')
+        self.deleteRacionalidad(nombre)
+		newHost = Pyro4.Proxy(Pyro4.locateNS(hostTo).list()['host.' + self.nombre])
+        newHost.addRacionalidad(nombre)
+	except:
+    	print('No existe la racionalidad en este Host')
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{nombre}: Nombre del componente de racionalidad que se desea mover.
+\item \textit{hostTo}: Host de destino al cual se desea mover el componente de racionalidad.
+\end{itemize}
+\subsubsection{\textbf{disperseAgente}(\textit{agentId})}
+Permite dispersar el agente identificado con id "\textit{agentId}" en la red, es decir, los componentes del agente (cabeza, movilidad y racionalidad) son enviados aleatoriamente a otros host en la red.
+\begin{lstlisting}
+def disperseAgente(self, agentId):
+	agent = Pyro4.Proxy(self.listAgentes[agentId])
+    movilidadId = agent.getMovilidadId()
+	racionalidadId = agent.getRacionalidadId()
+    self.moveMovilidad(movilidadId, random.sample(self.listNS.keys(), 1)[0])
+	self.moveRacionalidad(racionalidadId, random.sample(self.listNS.keys(), 1)[0])
+    return self.moveAgente(agentId, random.sample(self.listNS.keys(), 1)[0])
+\end{lstlisting}
+\subsubsection*{Parámetros}
+\begin{itemize}
+\item \textit{agentId}: Identificador del agente que será dispersado en la red.
+\end{itemize}
+\subsubsection*{Retorno}
+Retorna el nuevo identificador de recurso uniforme (uri) del agente que ha sido dispersado.
 
 \subsection{nombreclase.py}
 \begin{lstlisting}

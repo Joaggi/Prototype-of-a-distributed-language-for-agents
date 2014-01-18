@@ -1,5 +1,6 @@
 import grammar as g
 import re
+import threading
 
 def analizarSintaxis(all_tokens):
 	p=re.compile(g.getDeclaraciones())
@@ -8,6 +9,8 @@ def analizarSintaxis(all_tokens):
 		if p.match(" ".join(token_list))==None:
 			print "Error de sintaxis en la linea %d" %(i)
 			return False
+		elif token_list[0]=="iniciar_programa":
+			iniciar_programa()
 		elif token_list[0]=="crear_agente":
 			crear_agente(token_list[1])
 		elif token_list[0]=="mover_agente":
@@ -22,6 +25,10 @@ def analizarSintaxis(all_tokens):
 			detener_servicio(token_list[1])
 		i+=1
 
+def iniciar_programa():
+	thread = threading.Thread(target = iniciar_thread, args = [])
+	thread.start()
+	
 def crear_agente(nombre):
 	print "Ejecutar comando para crear el agente: "+nombre
 
@@ -39,3 +46,6 @@ def iniciar_servicio(nombre):
 	
 def detener_servicio(nombre):
 	print "Ejecutar comando para detener el servicio: "+nombre
+
+def iniciar_thread():
+	import InicializacionNaming

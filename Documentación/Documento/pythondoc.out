@@ -27,5 +27,19 @@
 \BOOKMARK [3][-]{subsubsection.1.4.8}{deleteNS\(nombre\)}{subsection.1.4}% 27
 \BOOKMARK [3][-]{subsubsection.1.4.9}{getListAgentes\(\)}{subsection.1.4}% 28
 \BOOKMARK [3][-]{subsubsection.1.4.10}{addAgente\(agente, create = True\)}{subsection.1.4}% 29
-\BOOKMARK [2][-]{subsection.1.5}{nombreclase.py}{section.1}% 30
-\BOOKMARK [3][-]{subsubsection.1.5.1}{nombre\(\)}{subsection.1.5}% 31
+\BOOKMARK [3][-]{subsubsection.1.4.11}{setListAgente\(lAgente\)}{subsection.1.4}% 30
+\BOOKMARK [3][-]{subsubsection.1.4.12}{deleteAgente\(nombre\)}{subsection.1.4}% 31
+\BOOKMARK [3][-]{subsubsection.1.4.13}{getListMovilidad\(\)}{subsection.1.4}% 32
+\BOOKMARK [3][-]{subsubsection.1.4.14}{addMovilidad\(movilidadId\)}{subsection.1.4}% 33
+\BOOKMARK [3][-]{subsubsection.1.4.15}{setListMovilidad\(lMovilidad\)}{subsection.1.4}% 34
+\BOOKMARK [3][-]{subsubsection.1.4.16}{deleteMovilidad\(nombre\)}{subsection.1.4}% 35
+\BOOKMARK [3][-]{subsubsection.1.4.17}{getListRacionalidad\(\)}{subsection.1.4}% 36
+\BOOKMARK [3][-]{subsubsection.1.4.18}{addRacionalidad\(racionalidadId\)}{subsection.1.4}% 37
+\BOOKMARK [3][-]{subsubsection.1.4.19}{setListRacionalidad\(lRacionalidad\)}{subsection.1.4}% 38
+\BOOKMARK [3][-]{subsubsection.1.4.20}{deleteRacionalidad\(nombre\)}{subsection.1.4}% 39
+\BOOKMARK [3][-]{subsubsection.1.4.21}{moveAgente\(nombre, hostTo\)}{subsection.1.4}% 40
+\BOOKMARK [3][-]{subsubsection.1.4.22}{moveMovilidad\(nombre, hostTo\)}{subsection.1.4}% 41
+\BOOKMARK [3][-]{subsubsection.1.4.23}{moveRacionalidad\(nombre, hostTo\)}{subsection.1.4}% 42
+\BOOKMARK [3][-]{subsubsection.1.4.24}{disperseAgente\(agentId\)}{subsection.1.4}% 43
+\BOOKMARK [2][-]{subsection.1.5}{nombreclase.py}{section.1}% 44
+\BOOKMARK [3][-]{subsubsection.1.5.1}{nombre\(\)}{subsection.1.5}% 45
