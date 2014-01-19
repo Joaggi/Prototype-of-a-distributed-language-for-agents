@@ -6,7 +6,7 @@ Created on Thu Jan 09 19:45:31 2014
 """
 from Pyro4 import *
 host = Proxy(locateNS().list().values()[1])
-agente = Proxy(host.addAgente("Jhon"))
+agente = Proxy(host.addAgente("Jorge"))
 print(agente.doIt())
 host2 = Proxy(Proxy(host.getListNS().values()[0]).list().values()[1])
 host.find("Jhon")

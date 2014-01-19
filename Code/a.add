@@ -1,7 +1,7 @@
 iniciar_programa
 crear_agente "Jorge"
-recuperar_agente "Ada"
-dispersar_agente "Grace"
+recuperar_agente "Jorge"
+dispersar_agente "Jorge"
 crear_comunidad "coders"
 iniciar_servicio "Mensajes"
 detener_servicio "Videoconferencia"

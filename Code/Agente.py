@@ -24,8 +24,8 @@ class Agente(object):
         self.movilidadId = movilidadId
         self.racionalidadId = racionalidadId
         
-        thread = threading.Thread(target = self.disperseFromMovilidad, args = [])
-        thread.start()
+        self.thread = threading.Thread(target = self.disperseFromMovilidad, args = [])
+        self.thread.start()
 
     def getMovilidadId(self):
         return self.movilidadId
@@ -63,8 +63,8 @@ class Agente(object):
         if(movilidadUri == False):
             print Agente.LOSSMOVILIDAD
             time.sleep(2)
-            thread = threading.Thread(target = self.disperseFromMovilidad, args = [])
-            thread.start()
+            self.thread = threading.Thread(target = self.disperseFromMovilidad, args = [])
+            self.thread.start()
             return False
         movilidad = Pyro4.Proxy(movilidadUri)
         tiempo = movilidad.howMuchToWait()
@@ -72,4 +72,7 @@ class Agente(object):
         self.disperseMySelf()
     
     def getHostUri(self):
-    	return self.hostUri
+        return self.hostUri
+     
+    def stopThread(self):
+        self.thread._stop()
