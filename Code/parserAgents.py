@@ -50,28 +50,22 @@ def crear_agente(nombre):
 	host.addAgente(nombre)
 	print "Agente %s agregado a la red!" % (nombre)
 
-def eliminar_agente(nombre):
-	print "1"    
-	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
-	print "2"    
-	agente = Pyro4.Proxy(host.resolve(nombre))
- 	print "3"    
-	agente.stopThread()
- 	print "4"    
-	Pyro4.Proxy(agente.getHostUri()).deleteAgente(nombre)
- 	print "5"    
+def eliminar_agente(nombre):    
+	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])  
+	agente = Pyro4.Proxy(host.resolve(nombre)) 
+	agente.stopThread()  
+	Pyro4.Proxy(agente.getHostUri()).deleteAgente(nombre)  
 	movilidadUri = host.resolve("legs_" + nombre)
- 	print "6"    
 	racionalidadUri = host.resolve("arms_" + nombre)
  	print "7"    
 	try:
-		ns = Pyro4.locateNS(host = movilidadUri[movilidadUri.find("@"),movilidadUri.find(":")])
+		ns = Pyro4.locateNS(host = movilidadUri[movilidadUri.find("@")+1:movilidadUri.find(":",5)])
 		host = Pyro4.Proxy(ns.list().values()[1])
 		host.deleteMovilidad("legs_" + nombre)
 	except:
 		print "No se pudo eliminar la movilidad del agente dado que no se encontro"
 	try:
-		ns = Pyro4.locateNS(host = racionalidadUri[movilidadUri.find("@"),movilidadUri.find(":")])
+		ns = Pyro4.locateNS(host = racionalidadUri[movilidadUri.find("@")+1:movilidadUri.find(":",5)])
 		host = Pyro4.Proxy(ns.list().values()[1])
 		host.deleteRacionalidad("arms_" + nombre)
 	except:

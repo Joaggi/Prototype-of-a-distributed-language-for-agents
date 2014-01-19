@@ -20,3 +20,11 @@ host.getListMovilidad()
 host2.getListMovilidad()
 host.getListRacionalidad()
 host2.getListRacionalidad()
+
+
+
+from Pyro4 import *
+host = Proxy(locateNS().list().values()[1])
+comunidad = Proxy(host.getListComunidadAgentes()["coders"])
+comunidad.addAgente("Jorge")
+comunidad.getMeetAgente(14)

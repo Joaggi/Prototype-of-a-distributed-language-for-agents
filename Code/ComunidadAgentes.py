@@ -59,14 +59,18 @@ class ComunidadAgentes(object):
         return str(self._pyroId)
         
     def getMeetAgente(self, precioOfrecido):
+        print "getMeetAgente 1"
         host = Pyro4.Proxy(self.hostUri)
+        print "getMeetAgente 2"
         for agenteId in self.getListAgente():
             agent, racionalidadUri = host.retrieveAgente(agenteId)
+            print "getMeetAgente 3"
             if(agent!=False):
                 try:
+                    print "getMeetAgente 4"
                     racionalidad = Pyro4.Proxy(racionalidadUri)
                     if (racionalidad.funcionUtilidad() <= precioOfrecido):
-                        print "Este agente cooperara"
+                        print agenteId + " cooperara"
                     
                 except:
                     "El agente no tiene racionalidad, por lo tanto no se puede negociar"
