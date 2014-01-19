@@ -51,6 +51,17 @@ def crear_agente(nombre):
 	print "Agente %s agregado a la red!" % (nombre)
 
 def eliminar_agente(nombre):
+	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
+	agenteURI = host.resolve(nombre)
+	Pyro4.Proxy(agenteURI.getHostUri()).deleteAgente(nombre)
+	movilidadUri = host.resolve("legs_" + nombre)
+	try:
+    	ns = Pyro4.locateNS(host = movilidadUri[movilidadUri.find("@"),movilidadUri.find(":")])
+		host = Proxy(ns.list().values()[1])
+		host.deleteMovilidad("legs_" + nombre)
+		agente = host.resolve("arms_" + nombre)
+		Pyro4.Proxy(agente.getHostUri()).deleteAgente(nombre)
+	
 	print "Agente %s eliminado de la red!" %(nombre)
 
 def mover_agente(nombre):

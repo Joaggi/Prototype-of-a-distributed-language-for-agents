@@ -71,3 +71,5 @@ class Agente(object):
         time.sleep(tiempo)
         self.disperseMySelf()
     
+    def getHostUri(self):
+    	return self.hostUri
