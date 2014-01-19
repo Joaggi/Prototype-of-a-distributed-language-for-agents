@@ -1,6 +1,6 @@
 iniciar_programa
 crear_agente "Jorge"
-mover_agente "Ada"
+recuperar_agente "Ada"
 dispersar_agente "Grace"
 crear_comunidad "coders"
 iniciar_servicio "Mensajes"

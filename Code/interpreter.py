@@ -1,5 +1,5 @@
 import lexer as l
-import parser as p
+import parserAgents as p
 import sys as s
 
 tokens=l.analizarEntrada(s.argv[1])

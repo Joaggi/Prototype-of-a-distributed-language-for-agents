@@ -22,8 +22,8 @@ def analizarSintaxis(all_tokens):
 			crear_agente(token_list[1])
 		elif token_list[0]=="eliminar_agente":
 			eliminar_agente(token_list[1])
-		elif token_list[0]=="mover_agente":
-			mover_agente(token_list[1])
+		elif token_list[0]=="recuperar_agente":
+			recuperar_agente(token_list[1])
 		elif token_list[0]=="dispersar_agente":
 			dispersar_agente(token_list[1])
 		elif token_list[0]=="crear_comunidad":
@@ -56,19 +56,21 @@ def eliminar_agente(nombre):
 	Pyro4.Proxy(agenteURI.getHostUri()).deleteAgente(nombre)
 	movilidadUri = host.resolve("legs_" + nombre)
 	try:
-    	ns = Pyro4.locateNS(host = movilidadUri[movilidadUri.find("@"),movilidadUri.find(":")])
+		ns = Pyro4.locateNS(host = movilidadUri[movilidadUri.find("@"),movilidadUri.find(":")])
 		host = Proxy(ns.list().values()[1])
 		host.deleteMovilidad("legs_" + nombre)
 		agente = host.resolve("arms_" + nombre)
 		Pyro4.Proxy(agente.getHostUri()).deleteAgente(nombre)
-	
-	print "Agente %s eliminado de la red!" %(nombre)
+	except:
+		print "Agente %s eliminado de la red!" %(nombre)
 
-def mover_agente(nombre):
-	print "Ejecutar comando para mover el agente: "+nombre
+def recuperar_agente(nombre):
+	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
+	print "El agente %s esta en: %s" %(nombre,host.retrieveAgente(nombre))
 	
 def dispersar_agente(nombre):
-	print "Ejecutar comando para dispersar el agente: "+nombre
+	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
+	print "El agente %s esta en: %s" %(nombre,host.disperseAgente(nombre))
 
 def crear_comunidad(nombre):
 	print "Ejecutar comando para crear la comunidad: "+nombre

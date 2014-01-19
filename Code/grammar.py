@@ -4,12 +4,12 @@ iniciar_programa='iniciar_programa'
 detener_programa='detener_programa'
 crear_agente='crear_agente "'+identificador+'"'
 eliminar_agente='eliminar_agente "'+identificador+'"'
-mover_agente='mover_agente "'+identificador+'"'
+recuperar_agente='recuperar_agente "'+identificador+'"'
 dispersar_agente='dispersar_agente "'+identificador+'"'
 crear_comunidad='crear_comunidad "'+identificador+'"'
 iniciar_servicio='iniciar_servicio "'+servicio+'"'
 detener_servicio='detener_servicio "'+servicio+'"'
-declaraciones=detener_programa+"|"+iniciar_programa+"|"+crear_agente+"|"+eliminar_agente+"|"+mover_agente+"|"+dispersar_agente+"|"+crear_comunidad+"|"+iniciar_servicio+"|"+detener_servicio
+declaraciones=detener_programa+"|"+iniciar_programa+"|"+crear_agente+"|"+eliminar_agente+"|"+recuperar_agente+"|"+dispersar_agente+"|"+crear_comunidad+"|"+iniciar_servicio+"|"+detener_servicio
 
 def getIdentificador():
 	return identificador
@@ -29,8 +29,8 @@ def getCrearAgente():
 def getEliminarAgente():
 	return eliminar_agente
 
-def getMoverAgente():
-	return mover_agente
+def getRecuperarAgente():
+	return recuperar_agente
 
 def getDispersarAgente():
 	return dispersar_agente
