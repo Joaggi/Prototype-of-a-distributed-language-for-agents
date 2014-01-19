@@ -192,101 +192,80 @@ class Host(object):
         self.moveRacionalidad(racionalidadId, random.sample(self.listNS.keys(), 1)[0])
         return self.moveAgente(agentId, random.sample(self.listNS.keys(), 1)[0])
         
-        
-    #Servicio
-    def searchHead(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
-        ret = self.findHead(name)
-        if(ret == False):
-            print('Precaucion!: Head del objeto no esta en el host. Esto puede afectar el rendimiento.')
-            for nameServer,nameServer_uri in self.listNS.items():
-                try:                
-                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
-                    ret = findHost.findHead(name)
-                except:
-                    print "Error: no se localizo el host"
-                    ret = False
-                if(ret != False):
-                    return [ret,Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre]]
-        return ret
-        
-    
-    def findHead(self, name):
-        """ returns uri of object or false """
-        try:
-            return self.listAgentes[name]
-        except:
-            return False   
-            
-    def searchMovilidad(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
-        ret = self.findMovilidad(name)
-        if(ret == False):
-            print('Precaucion!: Movilidad del objeto no esta en el host. Esto puede afectar el rendimiento.')
-            for nameServer,nameServer_uri in self.listNS.items():
-                try:                
-                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
-                    ret = findHost.findMovilidad(name)
-                except:
-                    print "Error: no se localizo el host"
-                    ret = False
-                if(ret != False):
-                    return [ret,Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre]]
-        return ret
 
-    
-    def findMovilidad(self, name):
-        """ returns uri of object or false """
-        try:
-            return self.listMovilidad[name]
-        except:
-            return False   
-            
-    def searchRacionalidad(self, name):#had to add this methos on the host, so it can act sorta like a NameServer
-        ret = self.findRacionalidad(name)
-        if(ret == False):
-            print('Precaucion!: Movilidad del objeto no esta en el host. Esto puede afectar el rendimiento.')
-            for nameServer,nameServer_uri in self.listNS.items():
-                try:                
-                    findHost = Pyro4.Proxy(Pyro4.Proxy(nameServer_uri).list()['host.' + self.nombre])
-                    ret = findHost.findRacionalidad(name)
-                except:
-                    print "Error: no se localizo el host"
-                    ret = False
-                if(ret != False):
-                    return ret
-        return ret
-        
-    
-    def findRacionalidad(self, name):
-        """ returns uri of object or false """
-        try:
-            return self.listRacionalidad[name]
-        except:
-            return False     
-    
+
     #Funciones para la comunidad de agentes.
     def retrieveAgente(self, agentId):
-        #Primero se recupera la cabeza o encabezado del agente.
-        agent = self.searchHead(agentId)
-        if(agent == False):
-            print 'No se encontro el agente'
-        else:
-            print 'Moviendo el encabezado al host ' + self.nombre
-            agent = self.moveAgente(agentId,self.listNS[self.nombre])
-            movilidadId = Pyro4.Proxy(agent).getMovilidadId()
-            [movilidad,hostMovilidad] = self.searchMovilidad(movilidadId)
-            if(movilidad == False):
-                print 'No se encontro la movilidad '
-                print 'Dado que no se encontro la movilidad no se procedera a encontrar la racionalidad'
-            else:
-                self.moveMovilidad(movilidadId, self.listNS[self.nombre])
-                racionalidadId = Pyro4.Proxy(agent).getRacionalidadId()
-                try:
-                    Pyro4.Proxy(hostMovilidad).getListMovilidad()[racionalidadId]
-                    self.moveRacionalidad(racionalidadId,self.listNS[self.nombre])
-                except:
-                    'La racionalidad no se encuentra con la movilidad por lo tanto no se podra mover'
+        agenteURI = self.resolve(agentId)
+        if (agenteURI == False):
+            print 'El agente no se pudo encontrar'
+            return False
+        racionalidadId = Pyro4.Proxy(agenteURI).getRacionalidadId()
+        racionalidadUri = self.resolve(racionalidadId)
+
+        movilidadId = Pyro4.Proxy(agenteURI).getMovilidadId()
+        agenteHost = agenteURI[agenteURI.find('@') + 1:]
+        racionalidadHost = racionalidadUri[racionalidadUri.find('@') + 1:]
+        selfHost = self._pyroDaemon.locationStr
+        print 'agente: ' + agenteHost + ', racionalidad: ' + racionalidadHost + ', self: ' + selfHost
+        if (racionalidadUri == False):
+            print 'La racionalidad no se pudo encontrar'
+            return False
+        if (str(racionalidadHost) != str(agenteHost) or str(agenteHost) != str(selfHost)):
+            print 'Cabeza o racionalidad no son locales'
+            # buscar la movilidad en la red y recoger las partes localmente
+            movilidadUri = self.resolve(movilidadId)
+            if(movilidadUri == False):
+                print 'Cabeza o racionalidad no son locales y la movilidad no se encuentra'
+                return False
+            print 'Movilidad encontrada'
+            # proceder a mover las partes
+            movilidadHost = movilidadUri[movilidadUri.find('@') + 1:]
+            # mover la cabeza (si no es local)
+            print 'Moviendo cabeza...'
+            if(agenteHost != selfHost):
+                remoteHost = Pyro4.Proxy(Pyro4.locateNS(agenteHost[:agenteHost.find(':')]).list()['host.' + self.nombre])
+                remoteHost.moveAgente(agentId, selfHost[:selfHost.find(':')])
+            #mover la racionalidad (si no es local)
+            print 'Moviendo racionalidad...'
+            if(racionalidadHost != selfHost):
+                remoteHost = Pyro4.Proxy(Pyro4.locateNS(racionalidadHost[:racionalidadHost.find(':')]).list()['host.' + self.nombre])
+                remoteHost.moveRacionalidad(racionalidadId, selfHost[:selfHost.find(':')])
+            #mover la movilidad (si no es local)
+            print 'Moviendo movilidad...'
+            if(movilidadHost != selfHost):
+                remoteHost = Pyro4.Proxy(Pyro4.locateNS(movilidadHost[:movilidadHost.find(':')]).list()['host.' + self.nombre])
+                remoteHost.moveMovilidad(movilidadId, selfHost[:selfHost.find(':')])
+            return self.retrieveAgente(agentId) ## una llamada resursiva, hara la verificacion de paso. Como ya esta todo local, no debe haber overhead problems
+        if (str(racionalidadHost) == str(agenteHost) and str(agenteHost) == str(selfHost)):
+            print 'Cabeza y racionalidad si son locales'
+            return [agenteURI, racionalidadUri]
+            # retoranr las uris.
+        return False
+
+
+
+        # #     print 'Moviendo el encabezado al host ' + self.nombre
+        # #     agent = self.moveAgente(agentId,self.listNS[self.nombre])
+        # #     movilidadId = Pyro4.Proxy(agent).getMovilidadId()
+        # #     movilidad = self.resolve(movilidadId)
+        # #     hostMovilidad = Pyro4.Proxy(movilidad[movilidad.find('@'),movilidad.find(':')])
+        # #     if(movilidad == False):
+        # #         print 'No se encontro la movilidad '
+        # #         print 'Dado que no se encontro la movilidad no se procedera a encontrar la racionalidad'
+        # #     else:
+        # #         self.moveMovilidad(movilidadId, self.listNS[self.nombre])
+        # #         racionalidadId = Pyro4.Proxy(agent).getRacionalidadId()
+        # #         try:
+        # #             Pyro4.Proxy(hostMovilidad).getListMovilidad()[racionalidadId]
+        # #             self.moveRacionalidad(racionalidadId,self.listNS[self.nombre])
+        # #         except:
+        # #             'La racionalidad no se encuentra con la movilidad por lo tanto no se podra mover'
                     
-        return agent
+        # return agent
+
+
+
 
 
     def getListComunidadAgentes(self):  
