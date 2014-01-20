@@ -96,8 +96,7 @@ def dispersar_agente(nombre):
 def crear_comunidad(nombre):
 	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
 	host.addComunidadAgentes(nombre)
-	print "Comunidad %s agregado a la red!" % (nombre) 
-	
+	print "Comunidad %s agregada a la red!" % (nombre)
 	
 def agregar_agente_comunidad(agente,comunidad):
 	print "Agregar agente %s a comunidad %s" % (agente,comunidad)
