@@ -28,6 +28,18 @@ def analizarSintaxis(all_tokens):
 			dispersar_agente(token_list[1][1:-1])
 		elif token_list[0]=="crear_comunidad":
 			crear_comunidad(token_list[1][1:-1])
+		elif token_list[0]=="agregar_agente_comunidad":
+			agregar_agente_comunidad(token_list[1][1:-1],token_list[2][1:-1])
+		elif token_list[0]=="agregar_servicio_comunidad":
+			agregar_servicio_comunidad(token_list[1][1:-1],token_list[2][1:-1])
+		elif token_list[0]=="obtener_lista_agentes_comunidad":
+			obtener_lista_agentes_comunidad(token_list[1][1:-1])
+		elif token_list[0]=="obtener_lista_agentes_host":
+			obtener_lista_agentes_host(token_list[1][1:-1])
+		elif token_list[0]=="obtener_lista_movilidad_host":
+			obtener_lista_movilidad_host(token_list[1][1:-1])
+		elif token_list[0]=="obtener_lista_racionalidad_host":
+			obtener_lista_racionalidad_host(token_list[1][1:-1])
 		elif token_list[0]=="iniciar_servicio":
 			iniciar_servicio(token_list[1][1:-1])
 		elif token_list[0]=="detener_servicio":
@@ -86,6 +98,25 @@ def crear_comunidad(nombre):
 	host.addComunidadAgentes(nombre)
 	print "Comunidad %s agregado a la red!" % (nombre) 
 	
+	
+def agregar_agente_comunidad(agente,comunidad):
+	print "Agregar agente %s a comunidad %s" % (agente,comunidad)
+	
+def agregar_servicio_comunidad(servicio,comunidad):
+	print "Agregar servicio %s a comunidad %s" % (servicio,comunidad)
+
+def obtener_lista_agentes_comunidad(nombre):
+	print "Obtener lista de agente de la comunidad %s" % (nombre)
+	
+def obtener_lista_agentes_host(nombre):
+	print "Obtener lista de agentes en el host %s" %(nombre)
+
+def obtener_lista_movilidad_host(nombre):
+	print "Obtener lista de movilidad en el host %s" %(nombre)
+	
+def obtener_lista_racionalidad_host(nombre):
+	print "Obtener lista de racionalidad en el host %s" %(nombre)
+
 def iniciar_servicio(nombre):
 	print "Ejecutar comando para iniciar el servicio: "+nombre
 	

@@ -1,9 +1,0 @@
-<Numero> ::= [0..9]+
-<Identificador> ::= [a..zA..Z]+
-<Servicio> ::= "Mensajes" | "Videoconferencia"
-<CrearAgente> ::= "Crear Agente" "(" Identificador ")"
-<MoverAgente> ::= "Mover Agente" "(" Identificador ")"
-<DispersarAgente> ::= "Dispersar Agente" "(" Identificador ")"
-<CrearComunidad> ::= "Crear Comunidad" "(" Identificador ")"
-<IniciarServicio> ::= "Iniciar Servicio" "(" Servicio ")"
-<DetenerServicio> ::= "Detener Servicio" "(" Servicio ")"

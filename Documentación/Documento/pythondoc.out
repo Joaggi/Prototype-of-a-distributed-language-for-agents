@@ -1,45 +1,46 @@
-\BOOKMARK [1][-]{section.1}{Documentaci\363n}{}% 1
-\BOOKMARK [2][-]{subsection.1.1}{Agente.py}{section.1}% 2
-\BOOKMARK [3][-]{subsubsection.1.1.1}{init\(nombre, movilidadId, racionalidadId, hostUri\)}{subsection.1.1}% 3
-\BOOKMARK [3][-]{subsubsection.1.1.2}{getMovilidad\(\)}{subsection.1.1}% 4
-\BOOKMARK [3][-]{subsubsection.1.1.3}{getRacionalidad\(\)}{subsection.1.1}% 5
-\BOOKMARK [3][-]{subsubsection.1.1.4}{getNombre\(\)}{subsection.1.1}% 6
-\BOOKMARK [3][-]{subsubsection.1.1.5}{getType\(\)}{subsection.1.1}% 7
-\BOOKMARK [3][-]{subsubsection.1.1.6}{getPyroId\(\)}{subsection.1.1}% 8
-\BOOKMARK [3][-]{subsubsection.1.1.7}{doIt\(\)}{subsection.1.1}% 9
-\BOOKMARK [2][-]{subsection.1.2}{ComunidadAgentes.py}{section.1}% 10
-\BOOKMARK [3][-]{subsubsection.1.2.1}{init\(nombre\)}{subsection.1.2}% 11
-\BOOKMARK [3][-]{subsubsection.1.2.2}{setServicio\(servicio\)}{subsection.1.2}% 12
-\BOOKMARK [3][-]{subsubsection.1.2.3}{getServicio\(\)}{subsection.1.2}% 13
-\BOOKMARK [3][-]{subsubsection.1.2.4}{getNombre\(\)}{subsection.1.2}% 14
-\BOOKMARK [3][-]{subsubsection.1.2.5}{addAgente\(agente,nombre\)}{subsection.1.2}% 15
-\BOOKMARK [3][-]{subsubsection.1.2.6}{getAgente\(\)}{subsection.1.2}% 16
-\BOOKMARK [2][-]{subsection.1.3}{CrearHost.py}{section.1}% 17
-\BOOKMARK [3][-]{subsubsection.1.3.1}{serveSimple\(objetos,host\)}{subsection.1.3}% 18
-\BOOKMARK [2][-]{subsection.1.4}{Host.py}{section.1}% 19
-\BOOKMARK [3][-]{subsubsection.1.4.1}{getNombre\(\)}{subsection.1.4}% 20
-\BOOKMARK [3][-]{subsubsection.1.4.2}{init\(nombre\)}{subsection.1.4}% 21
-\BOOKMARK [3][-]{subsubsection.1.4.3}{resolve\(name\)}{subsection.1.4}% 22
-\BOOKMARK [3][-]{subsubsection.1.4.4}{find\(name\)}{subsection.1.4}% 23
-\BOOKMARK [3][-]{subsubsection.1.4.5}{getListNS\(\)}{subsection.1.4}% 24
-\BOOKMARK [3][-]{subsubsection.1.4.6}{addNS\(host, ns\)}{subsection.1.4}% 25
-\BOOKMARK [3][-]{subsubsection.1.4.7}{setListNS\(lNS\)}{subsection.1.4}% 26
-\BOOKMARK [3][-]{subsubsection.1.4.8}{deleteNS\(nombre\)}{subsection.1.4}% 27
-\BOOKMARK [3][-]{subsubsection.1.4.9}{getListAgentes\(\)}{subsection.1.4}% 28
-\BOOKMARK [3][-]{subsubsection.1.4.10}{addAgente\(agente, create = True\)}{subsection.1.4}% 29
-\BOOKMARK [3][-]{subsubsection.1.4.11}{setListAgente\(lAgente\)}{subsection.1.4}% 30
-\BOOKMARK [3][-]{subsubsection.1.4.12}{deleteAgente\(nombre\)}{subsection.1.4}% 31
-\BOOKMARK [3][-]{subsubsection.1.4.13}{getListMovilidad\(\)}{subsection.1.4}% 32
-\BOOKMARK [3][-]{subsubsection.1.4.14}{addMovilidad\(movilidadId\)}{subsection.1.4}% 33
-\BOOKMARK [3][-]{subsubsection.1.4.15}{setListMovilidad\(lMovilidad\)}{subsection.1.4}% 34
-\BOOKMARK [3][-]{subsubsection.1.4.16}{deleteMovilidad\(nombre\)}{subsection.1.4}% 35
-\BOOKMARK [3][-]{subsubsection.1.4.17}{getListRacionalidad\(\)}{subsection.1.4}% 36
-\BOOKMARK [3][-]{subsubsection.1.4.18}{addRacionalidad\(racionalidadId\)}{subsection.1.4}% 37
-\BOOKMARK [3][-]{subsubsection.1.4.19}{setListRacionalidad\(lRacionalidad\)}{subsection.1.4}% 38
-\BOOKMARK [3][-]{subsubsection.1.4.20}{deleteRacionalidad\(nombre\)}{subsection.1.4}% 39
-\BOOKMARK [3][-]{subsubsection.1.4.21}{moveAgente\(nombre, hostTo\)}{subsection.1.4}% 40
-\BOOKMARK [3][-]{subsubsection.1.4.22}{moveMovilidad\(nombre, hostTo\)}{subsection.1.4}% 41
-\BOOKMARK [3][-]{subsubsection.1.4.23}{moveRacionalidad\(nombre, hostTo\)}{subsection.1.4}% 42
-\BOOKMARK [3][-]{subsubsection.1.4.24}{disperseAgente\(agentId\)}{subsection.1.4}% 43
-\BOOKMARK [2][-]{subsection.1.5}{nombreclase.py}{section.1}% 44
-\BOOKMARK [3][-]{subsubsection.1.5.1}{nombre\(\)}{subsection.1.5}% 45
+\BOOKMARK [1][-]{section.1}{Gram\341tica}{}% 1
+\BOOKMARK [1][-]{section.2}{Identificaci\363n de Tokens}{}% 2
+\BOOKMARK [1][-]{section.3}{Arboles sint\341cticos}{}% 3
+\BOOKMARK [1][-]{section.4}{Documentaci\363n de clases}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Agente.py}{section.4}% 5
+\BOOKMARK [3][-]{subsubsection.4.1.1}{init\(nombre, movilidadId, racionalidadId, hostUri\)}{subsection.4.1}% 6
+\BOOKMARK [3][-]{subsubsection.4.1.2}{getMovilidad\(\)}{subsection.4.1}% 7
+\BOOKMARK [3][-]{subsubsection.4.1.3}{getRacionalidad\(\)}{subsection.4.1}% 8
+\BOOKMARK [3][-]{subsubsection.4.1.4}{getNombre\(\)}{subsection.4.1}% 9
+\BOOKMARK [3][-]{subsubsection.4.1.5}{getType\(\)}{subsection.4.1}% 10
+\BOOKMARK [3][-]{subsubsection.4.1.6}{getPyroId\(\)}{subsection.4.1}% 11
+\BOOKMARK [3][-]{subsubsection.4.1.7}{doIt\(\)}{subsection.4.1}% 12
+\BOOKMARK [2][-]{subsection.4.2}{ComunidadAgentes.py}{section.4}% 13
+\BOOKMARK [3][-]{subsubsection.4.2.1}{init\(nombre\)}{subsection.4.2}% 14
+\BOOKMARK [3][-]{subsubsection.4.2.2}{setServicio\(servicio\)}{subsection.4.2}% 15
+\BOOKMARK [3][-]{subsubsection.4.2.3}{getServicio\(\)}{subsection.4.2}% 16
+\BOOKMARK [3][-]{subsubsection.4.2.4}{getNombre\(\)}{subsection.4.2}% 17
+\BOOKMARK [3][-]{subsubsection.4.2.5}{addAgente\(agente,nombre\)}{subsection.4.2}% 18
+\BOOKMARK [3][-]{subsubsection.4.2.6}{getAgente\(\)}{subsection.4.2}% 19
+\BOOKMARK [2][-]{subsection.4.3}{CrearHost.py}{section.4}% 20
+\BOOKMARK [3][-]{subsubsection.4.3.1}{serveSimple\(objetos,host\)}{subsection.4.3}% 21
+\BOOKMARK [2][-]{subsection.4.4}{Host.py}{section.4}% 22
+\BOOKMARK [3][-]{subsubsection.4.4.1}{getNombre\(\)}{subsection.4.4}% 23
+\BOOKMARK [3][-]{subsubsection.4.4.2}{init\(nombre\)}{subsection.4.4}% 24
+\BOOKMARK [3][-]{subsubsection.4.4.3}{resolve\(name\)}{subsection.4.4}% 25
+\BOOKMARK [3][-]{subsubsection.4.4.4}{find\(name\)}{subsection.4.4}% 26
+\BOOKMARK [3][-]{subsubsection.4.4.5}{getListNS\(\)}{subsection.4.4}% 27
+\BOOKMARK [3][-]{subsubsection.4.4.6}{addNS\(host, ns\)}{subsection.4.4}% 28
+\BOOKMARK [3][-]{subsubsection.4.4.7}{setListNS\(lNS\)}{subsection.4.4}% 29
+\BOOKMARK [3][-]{subsubsection.4.4.8}{deleteNS\(nombre\)}{subsection.4.4}% 30
+\BOOKMARK [3][-]{subsubsection.4.4.9}{getListAgentes\(\)}{subsection.4.4}% 31
+\BOOKMARK [3][-]{subsubsection.4.4.10}{addAgente\(agente, create = True\)}{subsection.4.4}% 32
+\BOOKMARK [3][-]{subsubsection.4.4.11}{setListAgente\(lAgente\)}{subsection.4.4}% 33
+\BOOKMARK [3][-]{subsubsection.4.4.12}{deleteAgente\(nombre\)}{subsection.4.4}% 34
+\BOOKMARK [3][-]{subsubsection.4.4.13}{getListMovilidad\(\)}{subsection.4.4}% 35
+\BOOKMARK [3][-]{subsubsection.4.4.14}{addMovilidad\(movilidadId\)}{subsection.4.4}% 36
+\BOOKMARK [3][-]{subsubsection.4.4.15}{setListMovilidad\(lMovilidad\)}{subsection.4.4}% 37
+\BOOKMARK [3][-]{subsubsection.4.4.16}{deleteMovilidad\(nombre\)}{subsection.4.4}% 38
+\BOOKMARK [3][-]{subsubsection.4.4.17}{getListRacionalidad\(\)}{subsection.4.4}% 39
+\BOOKMARK [3][-]{subsubsection.4.4.18}{addRacionalidad\(racionalidadId\)}{subsection.4.4}% 40
+\BOOKMARK [3][-]{subsubsection.4.4.19}{setListRacionalidad\(lRacionalidad\)}{subsection.4.4}% 41
+\BOOKMARK [3][-]{subsubsection.4.4.20}{deleteRacionalidad\(nombre\)}{subsection.4.4}% 42
+\BOOKMARK [3][-]{subsubsection.4.4.21}{moveAgente\(nombre, hostTo\)}{subsection.4.4}% 43
+\BOOKMARK [3][-]{subsubsection.4.4.22}{moveMovilidad\(nombre, hostTo\)}{subsection.4.4}% 44
+\BOOKMARK [3][-]{subsubsection.4.4.23}{moveRacionalidad\(nombre, hostTo\)}{subsection.4.4}% 45
+\BOOKMARK [3][-]{subsubsection.4.4.24}{disperseAgente\(agentId\)}{subsection.4.4}% 46

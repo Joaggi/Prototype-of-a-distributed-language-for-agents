@@ -1,2 +1,6 @@
-eliminar_agente "Jorge"
-crear_comunidad "pepe"
+agregar_agente_comunidad "Jhon" "coders"
+agregar_servicio_comunidad "Skype" "coders"
+obtener_lista_agentes_comunidad "coders"
+obtener_lista_agentes_host "mihost"
+obtener_lista_movilidad_host "mihost"
+obtener_lista_racionalidad_host "mihost"
