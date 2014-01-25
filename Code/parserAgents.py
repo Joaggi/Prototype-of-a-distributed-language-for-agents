@@ -100,21 +100,36 @@ def crear_comunidad(nombre):
 	
 def agregar_agente_comunidad(agente,comunidad):
 	print "Agregar agente %s a comunidad %s" % (agente,comunidad)
+	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
+	comunidad = Pyro4.Proxy(host.resolveComunidad(comunidad))
+	comunidad.addAgente(agente)
 	
 def agregar_servicio_comunidad(servicio,comunidad):
 	print "Agregar servicio %s a comunidad %s" % (servicio,comunidad)
+ 	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
+	comunidad = Pyro4.Proxy(host.resolveComunidad(comunidad))
+	comunidad.setServicio(servicio)
 
 def obtener_lista_agentes_comunidad(nombre):
 	print "Obtener lista de agente de la comunidad %s" % (nombre)
+ 	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
+	comunidad = Pyro4.Proxy(host.resolveComunidad(nombre))
+	print comunidad.getListAgente()
 	
 def obtener_lista_agentes_host(nombre):
 	print "Obtener lista de agentes en el host %s" %(nombre)
+	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
+	print host.getListAgentes()
 
 def obtener_lista_movilidad_host(nombre):
 	print "Obtener lista de movilidad en el host %s" %(nombre)
+ 	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
+	print host.getListMovilidad()
 	
 def obtener_lista_racionalidad_host(nombre):
 	print "Obtener lista de racionalidad en el host %s" %(nombre)
+	host = Pyro4.Proxy(Pyro4.locateNS().list().values()[1])
+	print host.getListRacionalidad()
 
 def iniciar_servicio(nombre):
 	print "Ejecutar comando para iniciar el servicio: "+nombre
