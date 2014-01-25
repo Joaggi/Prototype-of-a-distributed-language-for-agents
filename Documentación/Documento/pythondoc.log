@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.12.14)  25 JAN 2014 14:56
+=======
 This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.12.14)  19 JAN 2014 19:47
+>>>>>>> 3bc1d5c0d8d79fe678c4325f6a7f56db3fb82697
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -443,6 +447,18 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2008/02/07
+
+Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
+<2008/02/07> (tvz)
+\FV@CodeLineNo=\count109
+\FV@InFile=\read1
+\FV@TabBox=\box28
+\c@FancyVerbLine=\count110
+\FV@StepNumber=\count111
+\FV@OutFile=\write3
+)
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
@@ -457,34 +473,34 @@ LaTeX Info: Redefining \% on input line 21.
 )
 \openout1 = `pythondoc.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Info: Redefining \. on input line 28.
-LaTeX Info: Redefining \% on input line 28.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Info: Redefining \. on input line 29.
+LaTeX Info: Redefining \% on input line 29.
  (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count109
+\scratchcounter=\count112
 \scratchdimen=\dimen113
-\scratchbox=\box28
-\nofMPsegments=\count110
-\nofMParguments=\count111
+\scratchbox=\box29
+\nofMPsegments=\count113
+\nofMParguments=\count114
 \everyMPshowfont=\toks19
-\MPscratchCnt=\count112
+\MPscratchCnt=\count115
 \MPscratchDim=\dimen114
-\MPnumerator=\count113
-\makeMPintoPDFobject=\count114
+\MPnumerator=\count116
+\makeMPintoPDFobject=\count117
 \everyMPtoPDFconversion=\toks20
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -501,9 +517,9 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count115
-\AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 28.
+\c@lstlisting=\count118
+\AtBeginShipoutBox=\box30
+Package hyperref Info: Link coloring OFF on input line 29.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
@@ -511,21 +527,52 @@ Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count116
+\c@section@level=\count119
 )
-LaTeX Info: Redefining \ref on input line 28.
-LaTeX Info: Redefining \pageref on input line 28.
-LaTeX Info: Redefining \nameref on input line 28.
+LaTeX Info: Redefining \ref on input line 29.
+LaTeX Info: Redefining \pageref on input line 29.
+LaTeX Info: Redefining \nameref on input line 29.
 
 (./pythondoc.out) (./pythondoc.out)
-\@outlinefile=\write3
-\openout3 = `pythondoc.out'.
+\@outlinefile=\write4
+\openout4 = `pythondoc.out'.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 35.
+(Font)              <12> on input line 36.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 35.
+(Font)              <8> on input line 36.
 LaTeX Font Info:    External font `cmex10' loaded for size
+<<<<<<< HEAD
+(Font)              <6> on input line 36.
+
+Underfull \hbox (badness 10000) in paragraph at lines 38--39
+
+ []
+
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (4.2098pt too wide) in paragraph at lines 87--88
+[]\OT1/cmr/m/it/10 identificador\OT1/cmr/m/n/10 : iden-ti-fi-cador que per-mite
+ re-cono-cer ob-je-tos den-tro del lengua-
+ []
+
+[2]
+Overfull \hbox (3.89377pt too wide) in paragraph at lines 101--102
+[]\OT1/cmr/m/it/10 obtener[]lista[]agentes[]host\OT1/cmr/m/n/10 : Co-man-do que
+ per-mite obten-er la lista de agentes
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 109--110
+
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 111.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 111.
+=======
 (Font)              <6> on input line 35.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 37.
@@ -535,23 +582,46 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 Underfull \hbox (badness 10000) in paragraph at lines 42--43
 
  []
+>>>>>>> 3bc1d5c0d8d79fe678c4325f6a7f56db3fb82697
 
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
 
+<<<<<<< HEAD
+ []
+=======
 Underfull \hbox (badness 10000) in paragraph at lines 44--45
+>>>>>>> 3bc1d5c0d8d79fe678c4325f6a7f56db3fb82697
 
+[3]
+Overfull \hbox (18.91614pt too wide) in paragraph at lines 116--117
+[]\OT1/cmr/m/n/10 La doc-u-mentaci^^Son de la li-br-er^^S^^Pa se puede en-con-t
+rar en: []$\OT1/cmtt/m/n/10 http : / / pythonhosted .
  []
 
-[1
 
+<<<<<<< HEAD
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
+
+ []
+=======
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 Overfull \hbox (18.91614pt too wide) in paragraph at lines 49--50
 []\OT1/cmr/m/n/10 La doc-u-mentaci^^Son de la li-br-er^^S^^Pa se puede en-con-t
 rar en: []$\OT1/cmtt/m/n/10 http : / / pythonhosted .
  []
 
+>>>>>>> 3bc1d5c0d8d79fe678c4325f6a7f56db3fb82697
 
 Underfull \hbox (badness 10000) in paragraph at lines 54--55
 
+<<<<<<< HEAD
+Underfull \hbox (badness 10000) in paragraph at lines 129--130
+
+ []
+
+[4] [5] [6] [7]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 266.
+=======
  []
 
 
@@ -561,11 +631,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--63
 
 [2] [3] [4] [5]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 199.
+>>>>>>> 3bc1d5c0d8d79fe678c4325f6a7f56db3fb82697
 
  (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <8> not available
+<<<<<<< HEAD
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 266.
+
+[8] [9]
+Underfull \hbox (badness 10000) in paragraph at lines 348--349
+
+ []
+
+[10] [11] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24]
+[25]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 992.
+ [26]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 992.
+=======
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 199.
 
 [6] [7]
@@ -578,10 +663,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 281--282
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 925.
  [24]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 925.
+>>>>>>> 3bc1d5c0d8d79fe678c4325f6a7f56db3fb82697
  (./pythondoc.aux
 LaTeX Info: Redefining \. on input line 21.
 LaTeX Info: Redefining \% on input line 21.
 )
+<<<<<<< HEAD
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 992.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 992.
+Package rerunfilecheck Info: File `pythondoc.out' has not changed.
+(rerunfilecheck)             Checksum: 1572E5CEC255C56623E90B2A4E0D12A5;3716.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 992.
+ ) 
+Here is how much of TeX's memory you used:
+ 9041 strings out of 495059
+ 128451 string characters out of 3182029
+ 596999 words of memory out of 3000000
+ 11449 multiletter control sequences out of 15000+200000
+ 9424 words of font info for 33 fonts, out of 3000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 33i,7n,58p,813b,1838s stack positions out of 5000i,500n,10000p,200000b,50000s
+=======
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 925.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 925.
 Package rerunfilecheck Info: File `pythondoc.out' has not changed.
@@ -596,10 +698,27 @@ Here is how much of TeX's memory you used:
  9424 words of font info for 33 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  33i,7n,58p,813b,1934s stack positions out of 5000i,500n,10000p,200000b,50000s
+>>>>>>> 3bc1d5c0d8d79fe678c4325f6a7f56db3fb82697
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/t
+<<<<<<< HEAD
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on pythondoc.pdf (26 pages, 293415 bytes).
+PDF statistics:
+ 1157 PDF objects out of 1200 (max. 8388607)
+ 1103 compressed objects within 12 object streams
+ 704 named destinations out of 1000 (max. 500000)
+=======
 exmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type
@@ -616,5 +735,6 @@ PDF statistics:
  1155 PDF objects out of 1200 (max. 8388607)
  1101 compressed objects within 12 object streams
  702 named destinations out of 1000 (max. 500000)
+>>>>>>> 3bc1d5c0d8d79fe678c4325f6a7f56db3fb82697
  385 words of extra memory for PDF output out of 10000 (max. 10000000)
 

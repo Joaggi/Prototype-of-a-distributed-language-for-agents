@@ -6,6 +6,7 @@
 \usepackage{hyperref} 
 \usepackage{color}
 \usepackage{listings}
+\usepackage{fancyvrb}
 \lstset{ %
 language=C++,                % choose the language of the code
 basicstyle=\footnotesize,       % the size of the fonts that are used for the code
@@ -26,16 +27,91 @@ escapeinside={\%*}{*)}          % if you want to add a comment within your code
 }
 
 \begin{document}
+<<<<<<< HEAD
+\title{Prototipo de Lenguaje e interpretador para modelar redes AD-HOC usando agentes dispersos \textit{Lenguaje ADD}}
+=======
 \title{Prototipo de Lenguaje y Compilador para modelar redes AD-HOC usando agentes dispersos: \textit{Lenguaje ADD}}
+>>>>>>> 3bc1d5c0d8d79fe678c4325f6a7f56db3fb82697
 \author{Joseph Alegandro Gallego Mejía\\
 Sergio Edmundo Pérez Fonseca\\
 Jhon Fredy Ramírez Guzmán}
 \date{20 de enero, 2013}
 \maketitle
 
+<<<<<<< HEAD
+\section{Gramática del lenguaje propuesto}
+La gramática de nuestro lenguaje propuesto es una gramática \textit{LL1}. Donde la primera (\textbf{L}) hace alusion al hecho de que el flujo de terminales se lee de izquierda a derecha, accediendo a la entrada por su izquieda. La segunda (\textbf{L}) se entiende que el metodo de análisis predictivo construye una derivacion a izquierdas. El numero (\textbf{1}) indica el numero de terminales que debemos consultar para decidir que regla de produccion se aplica.\\
+
+Nuestra grámatica en el formato Bakus-Naur es la siguiente:
+\begin{Verbatim}
+<declaraciones> ::= <detener_programa>
+		| <iniciar_programa>
+		| <crear_agente>
+		| <eliminar_agente>
+		| <recuperar_agente>
+		| <dispersar_agente>
+		| <crear_comunidad>
+		| <iniciar_servicio>
+		| <detener_servicio>
+		| <agregar_agente_comunidad>
+		| <agregar_servicio_comunidad>
+		| <obtener_lista_agentes_comunidad>
+		| <obtener_lista_agentes_host>
+		| <obtener_lista_movilidad_host>
+		| <obtener_lista_racionalidad_host>
+<iniciar_programa> ::= 'iniciar_programa'
+<detener_programa> ::= 'detener_programa'
+<crear_agente> ::= 'crear_agente' '"' <identificador> '"'
+<eliminar_agente> ::= 'eliminar_agente' '"' <identificador> '"'
+<recuperar_agente> ::= 'recuperar_agente' '"' <identificador> '"'
+<dispersar_agente> ::= 'dispersar_agente' '"' <identificador> '"'
+<crear_comunidad> ::= 'crear_comunidad' '"' <identificador> '"'
+<iniciar_servicio> ::= 'iniciar_servicio' '"' <servicio> '"'
+<detener_servicio> ::= 'detener_servicio' '"' <servicio> '"'
+<agregar_agente_comunidad> ::= 'agregar_agente_comunidad'
+				'"' <identificador> '"' '"' <identificador> '"'
+<agregar_servicio_comunidad> ::= 'agregar_servicio_comunidad'
+				'"' <identificador> '"' '"' <identificador> '"'
+<obtener_lista_agentes_comunidad> ::= 'obtener_lista_agentes_comunidad'
+				'"' <identificador> '"'
+<obtener_lista_agentes_host> ::= 'obtener_lista_agentes_host'
+				'"' <identificador> '"'
+<obtener_lista_movilidad_host> ::= 'obtener_lista_movilidad_host'
+				'"' <identificador> '"'
+<obtener_lista_racionalidad_host> ::= 'obtener_lista_racionalidad_host'
+				'"' <identificador> '"'
+<servicio> ::= "Videoconferencia" | "Mensajes"
+<identificador> ::= letra { letra | digito }
+<digito> ::== [0-9]
+<letra> ::= [A-Za-z_]
+\end{Verbatim}
+
+=======
 \section{Gramática}
 La gramática de nuestro lenguaje propuesto es una gramática \textit{LL1}, donde la primera \textit{L} hace alusión al hecho de que el flujo de terminales se lee de izquierda a derecha, accediendo a la entrada por su izquierda (\textit{Left}). La segunda \textit{L} se refiere a que el método de análisis predictivo construye una derivación a izquierdas, y 
+>>>>>>> 3bc1d5c0d8d79fe678c4325f6a7f56db3fb82697
 \section{Identificación de Tokens}
+Los tokens válidos de nuestra gramática son:
+\begin{itemize}
+\item \textit{identificador}: identificador que permite reconocer objetos dentro del lenguaje. Está constituido por mínimo un carácter del conjunto alfabético, seguido de la combinación de ninguno o muchos carácteres del conjunto alfábetico y el conjunto de los digitos.
+\item \textit{servicio}: Identificador que permite reconocer un servicio determinado que ofrece una comunidad de agentes en la red Ad-Hoc. Solo puede tener los valores ``\textit{Mensajes}'' o "\textit{Videoconferencia}"
+\item \textit{iniciar\_programa}: Comando que permite iniciar la ejecución del programa.
+\item \textit{detener\_programa}: Comando que permite detener el programa en ejecución.
+\item \textit{crear\_agente}: Comando que permite crear un nuevo agente y agregarlo a la red Ad-Hoc.
+\item \textit{eliminar\_agente}: Comando que permite eliminar un agente de la red Ad-Hoc
+\item \textit{recuperar\_agente}: Comando que permite reconstruir el agente en el host a partir de sus componentes dispersos en la red Ad-Hoc.
+\item \textit{dispersar\_agente}: Comando que permite dispersar los componentes del agente en la red Ad-Hoc.
+\item \textit{crear\_comunidad}: Comando que permite crear una nueva comunidad de agentes y agregarla a la red Ad-Hoc.
+\item \textit{iniciar\_servicio}: Comando que permite iniciar un servicio determinado entre dos nodos en la red Ad-Hoc.
+\item \textit{detener\_servicio}: Comando que permite detener un servicio determinado que se encuentra en ejecución entre dos nodos en la red Ad-Hoc.
+\item \textit{agregar\_agente\_comunidad}: Comando que permite agregar un agente determinado a una comunidad de agentes determinada.
+\item \textit{agregar\_servicio\_comunidad}: Comando que permite agregar un servicio determinado a una comunidad de agentes determinada.
+\item \textit{obtener\_lista\_agentes\_comunidad}: Comando que permite obtener la lista de agentes que pertenencen a una comunidad de agentes determinada.
+\item \textit{obtener\_lista\_agentes\_host}: Comando que permite obtener la lista de agentes que se encuentran en el host en un determinado instante de tiempo.
+\item \textit{obtener\_lista\_movilidad\_host}: Comando que permite obtener la lista de componentes de movilidad de los agentes, que se encuentran en el host en un instante de tiempo determinado.
+\item \textit{obtener\_lista\_racionalidad\_host}: Comando que permite obtener la lista de componentes de racionalidad de los agentes, que se encuentran en el host en un instante de tiempo determinado.
+\end{itemize}
+
 \section{Arboles sintácticos}
 
 \section{¿Qué es Pyro?}
